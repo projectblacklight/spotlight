@@ -4,6 +4,11 @@
 // Tiptap is loaded on demand from the prebuilt "spotlight-tiptap" bundle,
 // so it is only downloaded when an HTML page is being edited.
 import { SerializedForm } from "spotlight/admin/form_observer"
+import {
+  ImageDialog,
+  imageDropAndPasteProps,
+  spotlightImage,
+} from "spotlight/admin/html_editor_image"
 
 const TOOLBAR_GROUPS = [
   [
@@ -74,6 +79,12 @@ const TOOLBAR_GROUPS = [
           : c.extendMarkRange("link").unsetLink(),
       active: (e) => e.isActive("link"),
     },
+    {
+      name: "image",
+      text: "🖼",
+      action: "image",
+      active: (e) => e.isActive("image"),
+    },
   ],
   [
     {
@@ -142,8 +153,10 @@ function buildToolbar(labels) {
 
 function refreshToolbar(editor, buttons) {
   buttons.forEach(({ button, definition }) => {
-    const can = definition.run(editor.can().chain().focus(), "x").run()
-    button.disabled = !can && !definition.prompt
+    if (definition.run) {
+      const can = definition.run(editor.can().chain().focus(), "x").run()
+      button.disabled = !can && !definition.prompt
+    }
     if (definition.active) {
       const active = definition.active(editor)
       button.classList.toggle("active", active)
@@ -159,8 +172,42 @@ function serialize(editor) {
 }
 
 export function mountHtmlEditor(textarea, tiptap) {
-  const { Editor, StarterKit, TableKit } = tiptap
+  const { Editor, Image, StarterKit, TableKit } = tiptap
   const labels = JSON.parse(textarea.dataset.editorLabels || "{}")
+  const attachmentEndpoint = textarea.closest("[data-attachment-endpoint]")
+    ?.dataset.attachmentEndpoint
+  const imageDialog = new ImageDialog(labels, attachmentEndpoint)
+  let editor
+
+  // Insert a new image (at `position`, or the selection), or edit the selected one
+  const openImageDialog = ({ file = null, position = null } = {}) => {
+    const editing = !file && editor.isActive("image")
+    const attrs = editing ? editor.getAttributes("image") : null
+    // The selection can move while the dialog is open (e.g. the rest of a double click),
+    // so remember which image is being edited.
+    const imagePosition = editing ? editor.state.selection.from : null
+    imageDialog.open({ attrs, file }).then((result) => {
+      if (!result) return editor.commands.focus()
+      if (editing) {
+        editor
+          .chain()
+          .focus()
+          .setNodeSelection(imagePosition)
+          .updateAttributes("image", result)
+          .run()
+      } else {
+        editor
+          .chain()
+          .focus()
+          .insertContentAt(position ?? editor.state.selection.from, {
+            type: "image",
+            attrs: result,
+          })
+          .run()
+      }
+    })
+  }
+  const actions = { image: () => openImageDialog() }
 
   const wrapper = document.createElement("div")
   wrapper.className = "html-editor"
@@ -171,7 +218,7 @@ export function mountHtmlEditor(textarea, tiptap) {
   textarea.after(wrapper)
   textarea.hidden = true
 
-  const editor = new Editor({
+  editor = new Editor({
     element: content,
     content: textarea.value,
     extensions: [
@@ -184,8 +231,20 @@ export function mountHtmlEditor(textarea, tiptap) {
         },
       }),
       TableKit.configure({ table: { resizable: false } }),
+      spotlightImage(Image),
     ],
     editorProps: {
+      ...imageDropAndPasteProps((file, position) =>
+        openImageDialog({ file, position }),
+      ),
+      handleDoubleClickOn: (_view, _pos, node, nodePos) => {
+        if (node.type.name !== "image") return false
+        // Don't rely on the first click having selected the image: the browser may have
+        // moved the selection elsewhere, and the dialog edits the selected image.
+        editor.commands.setNodeSelection(nodePos)
+        openImageDialog()
+        return true
+      },
       attributes: {
         "aria-label": labels.content || "Page content",
         "aria-multiline": "true",
@@ -200,6 +259,7 @@ export function mountHtmlEditor(textarea, tiptap) {
 
   buttons.forEach(({ button, definition }) => {
     button.addEventListener("click", () => {
+      if (definition.action) return actions[definition.action]()
       let value
       if (definition.prompt) {
         value = window.prompt(

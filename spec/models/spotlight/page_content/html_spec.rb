@@ -29,11 +29,58 @@ RSpec.describe Spotlight::PageContent::Html do
       expect(described_class.sanitize(html)).to eq html
     end
 
+    it 'keeps images from the editor' do
+      html = '<img src="/uploads/spotlight/attachment/file/1/a.png" alt="A map" data-size="small" data-align="left">' \
+             '<img src="https://example.com/b.png" alt="" data-size="full" data-align="center" data-decorative="true">'
+      expect(described_class.sanitize(html)).to eq html
+    end
+
+    it 'removes images that are not from http(s) or this site' do
+      %w[javascript:alert(1) data:image/png;base64,AAAA //evil.example.com/a.png a.png].each do |src|
+        expect(described_class.sanitize(%(<p>x</p><img src="#{src}" alt="a">))).to eq '<p>x</p>'
+      end
+    end
+
+    it 'removes unknown image size, alignment, and decorative values' do
+      html = '<img src="/a.png" alt="a" data-size="huge" data-align="top" data-decorative="maybe" width="5">'
+      expect(described_class.sanitize(html)).to eq '<img src="/a.png" alt="a">'
+    end
+
     it 'removes scripts, event handlers, styles, and javascript: links' do
       html = '<p onclick="alert(1)" style="color: red">hi</p><script>alert(2)</script><a href="javascript:alert(3)">x</a>'
       sanitized = described_class.sanitize(html)
       expect(sanitized).not_to include('<script', 'onclick', 'style', 'javascript:')
       expect(sanitized).to start_with '<p>hi</p>'
+    end
+  end
+
+  describe Spotlight::PageContent::Html::Fragment do
+    subject(:fragment) { described_class.new(html) }
+
+    context 'without images' do
+      let(:html) { '<p>Just text</p>' }
+
+      it 'does not need alt text' do
+        expect(fragment.supports_alt_text?).to be false
+        expect(fragment.item).to eq({})
+      end
+    end
+
+    context 'with images' do
+      let(:html) { '<img src="/a.png" alt="A map"><p>x</p><img src="/b.png" alt="" data-decorative="true"><img src="/c.png">' }
+
+      it 'reports each image for the alt text report' do
+        expect(fragment.supports_alt_text?).to be true
+        expect(fragment.item).to eq(
+          '0' => { 'alt_text' => 'A map', 'decorative' => nil },
+          '1' => { 'alt_text' => '', 'decorative' => 'true' },
+          '2' => { 'alt_text' => nil, 'decorative' => nil }
+        )
+      end
+    end
+
+    it 'sanitizes when rendering' do
+      expect(described_class.new('<p onclick="x()">hi</p><img src="javascript:x()">').to_html).to eq '<p>hi</p>'
     end
   end
 end
