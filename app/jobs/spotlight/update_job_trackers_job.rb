@@ -2,8 +2,8 @@
 
 module Spotlight
   ###
-  # Calls the #set_default_thumbnail method
-  # on the object passed in and calls save
+  # Rolls up the status and progress of a parent job tracker
+  # from the job trackers it reports on
   ###
   class UpdateJobTrackersJob < Spotlight::ApplicationJob
     def perform(job_tracker)
