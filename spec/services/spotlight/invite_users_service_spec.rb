@@ -19,11 +19,13 @@ RSpec.describe Spotlight::InviteUsersService do
   end
 
   context 'when the user has already received an invite' do
-    let!(:user) do
+    let(:user) do
       User.invite!(email: 'a-user-that-does-not-exist@example.com', skip_invitation: true).tap do |u|
         u.invitation_sent_at = Time.zone.now
       end
     end
+
+    before { user }
 
     it 'does not send an invite' do
       expect do

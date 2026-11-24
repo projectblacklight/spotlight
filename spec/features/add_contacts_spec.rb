@@ -3,9 +3,11 @@
 RSpec.describe 'Add a contact to an exhibit', type: :feature do
   let(:curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let!(:about_page) { FactoryBot.create(:about_page, exhibit:) }
 
-  before { login_as curator }
+  before do
+    FactoryBot.create(:about_page, exhibit:)
+    login_as curator
+  end
 
   it 'displays a newly added contact in the sidebar' do
     visit spotlight.exhibit_about_pages_path(exhibit)

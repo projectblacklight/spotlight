@@ -24,10 +24,10 @@ RSpec.describe SirTrevorRails::Blocks::FeaturedPagesBlock do
 
   describe '#pages' do
     let!(:page_a) { FactoryBot.create(:feature_page, slug: 'a', exhibit:) }
-    let!(:translated_page_a) { page_a.clone_for_locale('a').tap { |x| x.update(published: true) && x.save } }
-    let!(:page_b) { FactoryBot.create(:feature_page, slug: 'b', exhibit:) }
 
     before do
+      page_a.clone_for_locale('a').tap { |x| x.update(published: true) && x.save }
+      FactoryBot.create(:feature_page, slug: 'b', exhibit:)
       block_data[:item] = {
         '0': { id: 'a', display: 'true' },
         '1': { id: 'b', display: 'true' }

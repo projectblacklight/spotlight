@@ -25,9 +25,11 @@ RSpec.describe Spotlight::Search, type: :model do
   end
 
   describe 'default_scope' do
-    let!(:page1) { FactoryBot.create(:search, weight: 5, published: true) }
-    let!(:page2) { FactoryBot.create(:search, weight: 1, published: true) }
-    let!(:page3) { FactoryBot.create(:search, weight: 10, published: true) }
+    before do
+      FactoryBot.create(:search, weight: 5, published: true)
+      FactoryBot.create(:search, weight: 1, published: true)
+      FactoryBot.create(:search, weight: 10, published: true)
+    end
 
     it 'orders by weight' do
       expect(described_class.published.map(&:weight)).to eq [1, 5, 10]
@@ -35,9 +37,11 @@ RSpec.describe Spotlight::Search, type: :model do
   end
 
   describe '.unpublished' do
-    let!(:search1) { FactoryBot.create(:search, published: true) }
-    let!(:search2) { FactoryBot.create(:search, published: false) }
-    let!(:search3) { FactoryBot.create(:search, published: nil) }
+    before do
+      FactoryBot.create(:search, published: true)
+      FactoryBot.create(:search, published: false)
+      FactoryBot.create(:search, published: nil)
+    end
 
     it 'accounts for nil and false values' do
       expect(described_class.unpublished.count).to eq 5

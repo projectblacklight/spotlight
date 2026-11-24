@@ -3,8 +3,9 @@
 RSpec.describe 'Browse pages' do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:search) { FactoryBot.create(:search, title: 'Some Saved Search', exhibit:, published: true) }
-  let!(:search_2) { FactoryBot.create(:search, title: 'Some Other Saved Search', exhibit:, published: true) }
   let!(:group) { FactoryBot.create(:group, title: 'Awesome group', exhibit:, published: true, searches: [search]) }
+
+  before { FactoryBot.create(:search, title: 'Some Other Saved Search', exhibit:, published: true) }
 
   describe 'landing page' do
     before do

@@ -20,9 +20,9 @@ RSpec.describe Spotlight::SolrController, type: :controller do
     let(:role) { admin.roles.first }
     let(:connection) { instance_double(RSolr::Client) }
     let(:repository) { instance_double(Blacklight::Solr::Repository, connection:) }
-    let!(:custom_field) { FactoryBot.create(:custom_field, exhibit:, slug: 'custom_field') }
 
     before do
+      FactoryBot.create(:custom_field, exhibit:, slug: 'custom_field')
       sign_in admin
       allow(controller).to receive(:repository).and_return(repository)
     end

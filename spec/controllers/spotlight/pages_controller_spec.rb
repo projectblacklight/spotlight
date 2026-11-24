@@ -23,11 +23,11 @@ RSpec.describe Spotlight::PagesController, type: :controller do
   end
 
   describe '#index' do
-    let!(:published_feature_page) { FactoryBot.create(:feature_page, exhibit:, published: true) }
     let!(:unpublished_feature_page) { FactoryBot.create(:feature_page, exhibit:, published: false) }
-    let!(:published_about_page) { FactoryBot.create(:about_page, exhibit:, published: true) }
 
     before do
+      FactoryBot.create(:feature_page, exhibit:, published: true)
+      FactoryBot.create(:about_page, exhibit:, published: true)
       sign_in user
     end
 

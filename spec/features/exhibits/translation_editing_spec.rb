@@ -110,10 +110,10 @@ RSpec.describe 'Translation editing', type: :feature do
       end
 
       describe 'pages' do
-        let!(:about_page1) { FactoryBot.create(:about_page, title: 'First Page', exhibit:, locale: 'fr') }
         let(:about_page2) { FactoryBot.create(:about_page, title: 'Second Page', exhibit:, locale: 'fr') }
 
         before do
+          FactoryBot.create(:about_page, title: 'First Page', exhibit:, locale: 'fr')
           within '.translation-edit-form #general' do
             fill_in 'Home', with: 'Maison'
             fill_in 'About', with: 'Sur'

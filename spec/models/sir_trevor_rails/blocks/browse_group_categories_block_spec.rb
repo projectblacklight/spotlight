@@ -5,10 +5,12 @@ RSpec.describe SirTrevorRails::Blocks::BrowseGroupCategoriesBlock do
 
   let!(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:page) { FactoryBot.create(:feature_page, exhibit:) }
-  let!(:group1) { FactoryBot.create(:group, exhibit:, title: 'abc123', published: true) }
-  let!(:group2) { FactoryBot.create(:group, exhibit:, title: 'xyz321', published: true) }
-
   let(:block_data) { {} }
+
+  before do
+    FactoryBot.create(:group, exhibit:, title: 'abc123', published: true)
+    FactoryBot.create(:group, exhibit:, title: 'xyz321', published: true)
+  end
 
   describe '#groups' do
     it 'is the array of items with display set to true' do

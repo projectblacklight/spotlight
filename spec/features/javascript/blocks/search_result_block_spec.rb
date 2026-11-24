@@ -5,9 +5,9 @@ RSpec.describe 'Search Result Block', :js, type: :feature do
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
 
   let!(:feature_page) { FactoryBot.create(:feature_page, exhibit:) }
-  let!(:alt_search) { FactoryBot.create(:search, title: 'Alt. Search', exhibit:) }
 
   before do
+    FactoryBot.create(:search, title: 'Alt. Search', exhibit:)
     login_as exhibit_curator
 
     exhibit.searches.each { |x| x.update published: true }

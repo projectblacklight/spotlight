@@ -53,7 +53,7 @@ RSpec.describe Spotlight::SitesController, type: :controller do
     end
 
     describe 'GET tags' do
-      let!(:exhibit_a) { FactoryBot.create(:exhibit, tag_list: 'a') }
+      before { FactoryBot.create(:exhibit, tag_list: 'a') }
 
       it 'serializes the exhibit-level tags' do
         get :tags, params: { format: 'json' }

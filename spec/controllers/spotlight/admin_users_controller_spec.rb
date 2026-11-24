@@ -29,7 +29,8 @@ RSpec.describe Spotlight::AdminUsersController, type: :controller do
 
     describe 'DELETE destroy' do
       let(:user) { FactoryBot.create(:user) }
-      let!(:admin_role) { FactoryBot.create(:role, role: 'admin', user:, resource: Spotlight::Site.instance) }
+
+      before { FactoryBot.create(:role, role: 'admin', user:, resource: Spotlight::Site.instance) }
 
       it 'removes the site admin role from the given user' do
         delete :destroy, params: { id: user.id }

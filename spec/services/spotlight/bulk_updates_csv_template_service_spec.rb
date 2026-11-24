@@ -6,8 +6,11 @@ RSpec.describe Spotlight::BulkUpdatesCsvTemplateService do
   subject(:service) { described_class.new(exhibit:) }
 
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let!(:tag1) { FactoryBot.create(:tagging, tagger: exhibit, taggable: exhibit) }
-  let!(:tag2) { FactoryBot.create(:tagging, tagger: exhibit, taggable: exhibit) }
+
+  before do
+    FactoryBot.create(:tagging, tagger: exhibit, taggable: exhibit)
+    FactoryBot.create(:tagging, tagger: exhibit, taggable: exhibit)
+  end
 
   describe '#template' do
     let(:view_context) { Spotlight::BulkUpdatesController.new.view_context }

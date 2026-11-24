@@ -62,7 +62,7 @@ RSpec.describe 'Browse Category Administration', type: :feature do
     end
 
     describe 'with a group present' do
-      let!(:group) { FactoryBot.create(:group, exhibit:, title: 'Good group') }
+      before { FactoryBot.create(:group, exhibit:, title: 'Good group') }
 
       it 'enables group selection' do
         visit spotlight.edit_exhibit_search_path(exhibit, search)

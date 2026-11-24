@@ -2,10 +2,12 @@
 
 RSpec.describe 'Locale Selector' do
   let(:exhibit) { FactoryBot.create(:exhibit, published: true) }
-  let!(:language_es) { FactoryBot.create(:language, exhibit:, locale: 'es', public: true) }
-  let!(:language_zh) { FactoryBot.create(:language, exhibit:, locale: 'zh') }
 
-  before { login_as user }
+  before do
+    FactoryBot.create(:language, exhibit:, locale: 'es', public: true)
+    FactoryBot.create(:language, exhibit:, locale: 'zh')
+    login_as user
+  end
 
   before(:all) do
     # mimics setting config.i18n.fallbacks = [I18n.default_locale] in the rails environment

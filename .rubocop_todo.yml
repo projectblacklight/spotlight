@@ -232,41 +232,6 @@ RSpec/LeakyConstantDeclaration:
     - "spec/models/spotlight/access_controls_enforcement_search_builder_spec.rb"
     - "spec/models/spotlight/browse_category_search_builder_spec.rb"
 
-# Offense count: 63
-RSpec/LetSetup:
-  Exclude:
-    - "spec/components/spotlight/admin_users/exhibit_roles_component_spec.rb"
-    - "spec/controllers/spotlight/admin_users_controller_spec.rb"
-    - "spec/controllers/spotlight/groups_controller_spec.rb"
-    - "spec/controllers/spotlight/home_pages_controller_spec.rb"
-    - "spec/controllers/spotlight/pages_controller_spec.rb"
-    - "spec/controllers/spotlight/sites_controller_spec.rb"
-    - "spec/controllers/spotlight/solr_controller_spec.rb"
-    - "spec/features/add_contacts_spec.rb"
-    - "spec/features/browse_category_admin_spec.rb"
-    - "spec/features/browse_category_navigation_spec.rb"
-    - "spec/features/create_page_spec.rb"
-    - "spec/features/dashboard_spec.rb"
-    - "spec/features/edit_contact_spec.rb"
-    - "spec/features/exhibits/translation_editing_spec.rb"
-    - "spec/features/javascript/blocks/browse_group_categories_block_spec.rb"
-    - "spec/features/javascript/blocks/rule_block_spec.rb"
-    - "spec/features/javascript/blocks/search_result_block_spec.rb"
-    - "spec/features/javascript/feature_page_admin_spec.rb"
-    - "spec/features/locale_selector_spec.rb"
-    - "spec/lib/migration/iiif_spec.rb"
-    - "spec/models/sir_trevor_rails/blocks/browse_group_categories_block_spec.rb"
-    - "spec/models/sir_trevor_rails/blocks/featured_pages_block_spec.rb"
-    - "spec/models/spotlight/exhibit_spec.rb"
-    - "spec/models/spotlight/feature_page_spec.rb"
-    - "spec/models/spotlight/search_spec.rb"
-    - "spec/services/spotlight/bulk_updates_csv_template_service_spec.rb"
-    - "spec/services/spotlight/exhibit_import_export_service_spec.rb"
-    - "spec/services/spotlight/invite_users_service_spec.rb"
-    - "spec/views/spotlight/about_pages/_sidebar.html.erb_spec.rb"
-    - "spec/views/spotlight/feature_pages/_sidebar.html.erb_spec.rb"
-    - "spec/views/spotlight/sites/edit_exhibits.html.erb_spec.rb"
-
 # Offense count: 3
 RSpec/MessageChain:
   Exclude:
