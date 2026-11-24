@@ -72,7 +72,8 @@ RSpec.describe Spotlight::GroupsController, type: :controller do
 
     describe 'PATCH update_all' do
       let!(:group2) { FactoryBot.create(:group, exhibit:, published: true) }
-      let!(:group3) { FactoryBot.create(:group, exhibit:, published: true) }
+
+      before { FactoryBot.create(:group, exhibit:, published: true) }
 
       it 'shows edit page' do
         patch :update_all, params: {

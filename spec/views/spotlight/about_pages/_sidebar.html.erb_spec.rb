@@ -3,10 +3,10 @@
 RSpec.describe 'spotlight/about_pages/_sidebar.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let!(:page1) { FactoryBot.create(:about_page, title: 'One', weight: 4, exhibit:) }
-  let!(:page2) { FactoryBot.create(:about_page, exhibit:, title: 'Two', published: false) }
-  let!(:page3) { FactoryBot.create(:about_page, exhibit:, title: 'Three', weight: 3) }
 
   before do
+    FactoryBot.create(:about_page, exhibit:, title: 'Two', published: false)
+    FactoryBot.create(:about_page, exhibit:, title: 'Three', weight: 3)
     allow(view).to receive_messages(current_exhibit: exhibit)
     allow(view).to receive_messages(exhibit_about_page_path: '/about/9')
     assign(:exhibit, page1.exhibit)

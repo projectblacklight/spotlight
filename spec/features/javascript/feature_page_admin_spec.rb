@@ -19,15 +19,14 @@ RSpec.describe 'Feature Pages Adminstration', :js do
     )
   end
 
-  let!(:page3) do
+  before do
     FactoryBot.create(
       :feature_page,
       title: 'FeaturePage3',
       exhibit:
     )
+    login_as exhibit_curator
   end
-
-  before { login_as exhibit_curator }
 
   it 'can order and nest the pages' do
     visit spotlight.exhibit_dashboard_path(exhibit)

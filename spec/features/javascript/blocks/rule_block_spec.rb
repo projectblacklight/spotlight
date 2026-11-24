@@ -3,9 +3,11 @@
 RSpec.describe 'Horizontal rule block', :js, type: :feature do
   let(:exhibit) { FactoryBot.create(:exhibit) }
   let(:exhibit_curator) { FactoryBot.create(:exhibit_curator, exhibit:) }
-  let!(:feature_page) { FactoryBot.create(:feature_page, exhibit:) }
 
-  before { login_as exhibit_curator }
+  before do
+    FactoryBot.create(:feature_page, exhibit:)
+    login_as exhibit_curator
+  end
 
   it 'allows the user to select which image in a multi image object to display' do
     exhibit.home_page.content = '[]'

@@ -94,7 +94,6 @@ RSpec.describe Spotlight::HomePagesController, type: :controller do
     end
 
     context 'when a non-default locale version of the page exists' do
-      let!(:page) { exhibit.home_page }
       let!(:page_es) { FactoryBot.create(:home_page, exhibit:, locale: 'es') }
 
       it 'is loaded' do

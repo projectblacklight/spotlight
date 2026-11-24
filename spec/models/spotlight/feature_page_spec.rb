@@ -4,9 +4,11 @@ RSpec.describe Spotlight::FeaturePage, type: :model do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   describe 'default_scope' do
-    let!(:page1) { FactoryBot.create(:feature_page, weight: 5, exhibit:) }
-    let!(:page2) { FactoryBot.create(:feature_page, weight: 1, exhibit:) }
-    let!(:page3) { FactoryBot.create(:feature_page, weight: 10, exhibit:) }
+    before do
+      FactoryBot.create(:feature_page, weight: 5, exhibit:)
+      FactoryBot.create(:feature_page, weight: 1, exhibit:)
+      FactoryBot.create(:feature_page, weight: 10, exhibit:)
+    end
 
     it 'orders by weight' do
       expect(described_class.all.map(&:weight)).to eq [1, 5, 10]
@@ -15,11 +17,13 @@ RSpec.describe Spotlight::FeaturePage, type: :model do
 
   describe 'display_sidebar?' do
     let(:parent) { FactoryBot.create(:feature_page, exhibit:) }
-    let!(:child) { FactoryBot.create(:feature_page, parent_page: parent, exhibit:) }
     let!(:unpublished_parent) { FactoryBot.create(:feature_page, published: false, exhibit:) }
     let!(:unpublished_child) { FactoryBot.create(:feature_page, parent_page: unpublished_parent, published: false, exhibit:) }
 
-    before { unpublished_parent.display_sidebar = false }
+    before do
+      FactoryBot.create(:feature_page, parent_page: parent, exhibit:)
+      unpublished_parent.display_sidebar = false
+    end
 
     it 'is set to true if the page has a published child' do
       expect(parent).to be_display_sidebar

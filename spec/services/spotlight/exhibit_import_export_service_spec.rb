@@ -165,7 +165,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
 
     context 'when the exhibit has contacts' do
       context 'when a contact has an avatar' do
-        let!(:curator) do
+        before do
           FactoryBot.create(:contact, :with_avatar,
                             exhibit: source_exhibit,
                             contact_info: { title: 'xyz' })
@@ -180,7 +180,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
       end
 
       context 'when a contact has no avatar' do
-        let!(:curator) do
+        before do
           FactoryBot.create(:contact, exhibit: source_exhibit, avatar: nil)
         end
 
@@ -191,11 +191,8 @@ RSpec.describe Spotlight::ExhibitImportExportService do
     end
 
     context 'when the exhibit has languages and translations' do
-      let!(:language) do
+      before do
         source_exhibit.languages.create!(locale: 'zz', public: true, text: 'abc')
-      end
-
-      let!(:translation) do
         source_exhibit.translations.create!(locale: 'zz', key: 'abc', value: '123')
       end
 
@@ -239,7 +236,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
     end
 
     context 'with a feature page slug' do
-      let!(:feature_page) { FactoryBot.create(:feature_page, exhibit: source_exhibit, slug: 'xyz') }
+      before { FactoryBot.create(:feature_page, exhibit: source_exhibit, slug: 'xyz') }
 
       it 'uses the existing slug for the page' do
         expect(subject.feature_pages.find('xyz')).to be_persisted
@@ -432,11 +429,11 @@ RSpec.describe Spotlight::ExhibitImportExportService do
   describe 'idempotency' do
     let(:masthead) { FactoryBot.create(:masthead) }
     let(:thumbnail) { FactoryBot.create(:exhibit_thumbnail) }
-    let!(:search) { FactoryBot.create(:search, exhibit: source_exhibit, masthead: FactoryBot.create(:masthead), thumbnail: FactoryBot.create(:featured_image)) }
-    let!(:feature_page_1) { FactoryBot.create(:feature_page, exhibit: source_exhibit) }
-    let!(:feature_page_2) { FactoryBot.create(:feature_page, exhibit: source_exhibit) }
 
     before do
+      FactoryBot.create(:search, exhibit: source_exhibit, masthead: FactoryBot.create(:masthead), thumbnail: FactoryBot.create(:featured_image))
+      FactoryBot.create(:feature_page, exhibit: source_exhibit)
+      FactoryBot.create(:feature_page, exhibit: source_exhibit)
       source_exhibit.masthead = masthead
       source_exhibit.thumbnail = thumbnail
     end

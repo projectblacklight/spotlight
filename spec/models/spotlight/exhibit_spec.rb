@@ -181,7 +181,8 @@ RSpec.describe Spotlight::Exhibit, type: :model do
   end
 
   describe '#main_about_page' do
-    let!(:about_page) { FactoryBot.create(:about_page, exhibit:, published: false) }
+    before { FactoryBot.create(:about_page, exhibit:, published: false) }
+
     let!(:about_page2) { FactoryBot.create(:about_page, exhibit:, published: true) }
     let(:about_page2_es) { about_page2.clone_for_locale('es') }
 
@@ -392,7 +393,8 @@ RSpec.describe Spotlight::Exhibit, type: :model do
   describe '#requested_by' do
     context 'with multiple exhibit users' do
       let!(:exhibit_admin) { FactoryBot.create(:exhibit_admin, exhibit: subject) }
-      let!(:another_exhibit_admin) { FactoryBot.create(:exhibit_admin, exhibit: subject) }
+
+      before { FactoryBot.create(:exhibit_admin, exhibit: subject) }
 
       it 'is the first listed user' do
         expect(subject.requested_by).to eq exhibit_admin

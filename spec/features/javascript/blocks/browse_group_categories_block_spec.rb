@@ -8,9 +8,9 @@ RSpec.describe 'Browse Group Categories', :js, type: :feature do
   let(:search1) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good dogs') }
   let(:search2) { FactoryBot.create(:published_search, exhibit:, title: 'All of the good cats') }
   let(:search3) { FactoryBot.create(:search, exhibit:, title: 'All of the good turtles') }
-  let!(:group) { FactoryBot.create(:group, exhibit:, searches: [search1, search2, search3], title: 'Pets', published: true) }
 
   before do
+    FactoryBot.create(:group, exhibit:, searches: [search1, search2, search3], title: 'Pets', published: true)
     login_as exhibit_curator
 
     visit spotlight.edit_exhibit_feature_page_path(exhibit, feature_page)

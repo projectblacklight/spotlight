@@ -50,9 +50,9 @@ RSpec.describe Migration::IIIF do
   describe '#migrate_upload_images' do
     let(:file) { double }
     let(:exhibit) { FactoryBot.create(:exhibit) }
-    let!(:upload) { Spotlight::Resources::Upload.create(exhibit:) }
 
     before do
+      Spotlight::Resources::Upload.create(exhibit:)
       allow(File).to receive(:exist?).and_return(true)
       allow(File).to receive(:new).and_return(file)
       # allow other calls (from rails 4)
@@ -71,9 +71,9 @@ RSpec.describe Migration::IIIF do
 
   describe '#migrate_contact_avatars' do
     let(:file) { double }
-    let!(:contact1) { Spotlight::Contact.create }
 
     before do
+      Spotlight::Contact.create
       allow(File).to receive(:exist?).and_return(true)
       allow(File).to receive(:new).and_return(file)
       # allow other calls (from rails 4)

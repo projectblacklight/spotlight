@@ -8,16 +8,15 @@ RSpec.describe Spotlight::AdminUsers::ExhibitRolesComponent, type: :component do
   let(:user) { FactoryBot.create(:user) }
 
   context 'when user has exhibit roles' do
-    let!(:curator_role1) do
+    before do
       FactoryBot.create(:role, user:, role: 'curator').tap do |r|
         r.resource.update(title: 'B Exhibit')
       end
-    end
-    let!(:curator_role2) do
       FactoryBot.create(:role, user:, role: 'curator').tap do |r|
         r.resource.update(title: 'A Exhibit')
       end
     end
+
     let!(:admin_role) { FactoryBot.create(:role, user:, role: 'admin') }
 
     it 'displays exhibit roles for the user sorted by role and exhibit title' do
