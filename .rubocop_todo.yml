@@ -310,11 +310,6 @@ RSpec/ReceiveMessages:
     - "spec/views/spotlight/searches/edit.html.erb_spec.rb"
     - "spec/views/spotlight/translations/_import.html.erb_spec.rb"
 
-# Offense count: 3
-RSpec/RepeatedExampleGroupBody:
-  Exclude:
-    - "spec/controllers/spotlight/featured_images_controller_spec.rb"
-
 # Offense count: 69
 RSpec/SubjectStub:
   Exclude:

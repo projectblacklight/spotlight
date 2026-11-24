@@ -29,37 +29,7 @@ RSpec.describe Spotlight::FeaturedImagesController, type: :controller do
 
     before { sign_in user }
 
-    describe 'POST create a thumbnail' do
-      it 'is successful' do
-        expect do
-          post :create, params: {
-            featured_image: {
-              image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
-            }
-          }
-        end.to change(Spotlight::FeaturedImage, :count).by(1)
-
-        expect(response).to be_successful
-        expect(response.body).to match %r{\{"tilesource":"/images/\d+-.+/info\.json","id":\d+\}}
-      end
-    end
-
-    describe 'POST create a masthead' do
-      it 'is successful' do
-        expect do
-          post :create, params: {
-            featured_image: {
-              image: fixture_file_upload('spec/fixtures/800x600.png', 'image/png')
-            }
-          }
-        end.to change(Spotlight::FeaturedImage, :count).by(1)
-
-        expect(response).to be_successful
-        expect(response.body).to match %r{\{"tilesource":"/images/\d+-.+/info\.json","id":\d+\}}
-      end
-    end
-
-    describe 'POST create an avatar' do
+    describe 'POST create' do
       it 'is successful' do
         expect do
           post :create, params: {
