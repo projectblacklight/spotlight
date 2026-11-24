@@ -470,14 +470,6 @@ Rails/OutputSafety:
     - "app/helpers/spotlight/pages_helper.rb"
     - "app/helpers/spotlight/rendering_helper.rb"
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: conservative, aggressive
-Rails/PluckInWhere:
-  Exclude:
-    - "app/models/concerns/spotlight/user.rb"
-
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/RakeEnvironment:
