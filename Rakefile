@@ -96,7 +96,7 @@ namespace :spotlight do
       solr.with_collection(name: 'blacklight-core', dir: 'lib/generators/spotlight/templates/solr/conf') do
         within_test_app do
           unless File.exist? '.initialized'
-            system 'bin/rails spotlight:initialize spotlight_test:solr:seed'
+            system 'bin/rails spotlight:initialize spotlight_test:solr:seed spotlight_test:seed_exhibit'
             File.open('.initialized', 'w') {}
           end
           system 'bin/dev'

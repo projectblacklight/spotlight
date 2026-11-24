@@ -162,7 +162,7 @@ Note: if your system is confused by conflicting gem versions, you may need to ad
 
 ### Run a development server
 
-After following one of the instructions below, visit http://localhost:3000. A Solr instance will be running on port 8983. When using importmap (the default configuration), JavaScript changes in development should not require [bundling](#updating-the-javascript-bundle) or a server restart.
+After following one of the instructions below, visit http://localhost:3000. A Solr instance will be running on port 8983. The setup creates a sample exhibit at http://localhost:3000/spotlight/sample with an image masthead, feature and about pages, a browse category, tagged and private items, and a contact email for the feedback form. When using importmap (the default configuration), JavaScript changes in development should not require [bundling](#updating-the-javascript-bundle) or a server restart.
 
 #### With solr_wrapper
 
@@ -180,6 +180,7 @@ rake engine_cart:generate
 rake spotlight:fixtures
 cd .internal_test_app
 bin/rails spotlight:initialize
+bin/rails spotlight_test:seed_exhibit
 bin/dev
 ```
 
@@ -193,6 +194,7 @@ rake engine_cart:generate
 rake spotlight:fixtures
 cd .internal_test_app
 rake spotlight:seed_admin_user
+bin/rails spotlight_test:seed_exhibit
 bin/dev
 ```
 
