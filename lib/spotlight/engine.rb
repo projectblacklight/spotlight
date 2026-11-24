@@ -14,6 +14,7 @@ require 'paper_trail'
 require 'riiif'
 require 'spotlight/riiif_service'
 require 'spotlight/upload_field_config'
+require 'spotlight/legacy_config_forwarding'
 
 module Spotlight
   ##
@@ -71,8 +72,9 @@ module Spotlight
     # +spotlight+ entry in the Rails configuration namespace, rather than
     # polluting the shared Railtie::Configuration namespace. Other railties
     # follow the same convention.
-    spotlight_config = OpenStruct.new
+    spotlight_config = ActiveSupport::OrderedOptions.new
     config.spotlight = spotlight_config
+    LegacyConfigForwarding.apply(config, spotlight_config)
 
     def self.user_class
       Spotlight::Engine.config.spotlight.user_class.constantize
@@ -118,7 +120,7 @@ module Spotlight
     spotlight_config.iiif_service = Spotlight::RiiifService
 
     # Suffixes for spotlight-created solr fields
-    spotlight_config.solr_fields = OpenStruct.new
+    spotlight_config.solr_fields = ActiveSupport::OrderedOptions.new
     spotlight_config.solr_fields.prefix = ''
     spotlight_config.solr_fields.boolean_suffix = '_bsi'
     spotlight_config.solr_fields.string_suffix = '_ssim'
@@ -316,7 +318,7 @@ module Spotlight
       SolrDocumentsFeatures SolrDocumentsGrid SearchResults
     ]
 
-    spotlight_config.routes = OpenStruct.new
+    spotlight_config.routes = ActiveSupport::OrderedOptions.new
     spotlight_config.routes.solr_documents = {}
 
     spotlight_config.controller_tracking_method = 'track_catalog_path'
@@ -335,7 +337,7 @@ module Spotlight
 
     spotlight_config.bulk_actions_batch_size = 1000
 
-    spotlight_config.bulk_updates = OpenStruct.new
+    spotlight_config.bulk_updates = ActiveSupport::OrderedOptions.new
     spotlight_config.bulk_updates.csv_id = 'Item ID'
     spotlight_config.bulk_updates.csv_title = 'Item Title'
     spotlight_config.bulk_updates.csv_visibility = 'Visibility'
