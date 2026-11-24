@@ -19,9 +19,14 @@ RSpec.describe 'Editing a page with the rich text (HTML) editor', :js do
     visit spotlight.edit_exhibit_feature_page_path(exhibit, new_page)
     editor = find('.html-editor-content .ProseMirror')
     editor.click
+    # Toolbar buttons return focus to the editor on the next animation frame. Wait for it before typing,
+    # otherwise Element#send_keys focuses the editor itself and puts the caret at the end, i.e. in the
+    # empty paragraph Tiptap keeps after the heading.
     find('[role=toolbar] button', text: 'H2').click
+    expect(page).to have_css('.ProseMirror.ProseMirror-focused')
     editor.send_keys('My heading', :enter, 'Some ')
     find('button[aria-label="Bold"]').click
+    expect(page).to have_css('.ProseMirror.ProseMirror-focused')
     editor.send_keys('bold text')
     expect(page).to have_css('button[aria-label="Bold"][aria-pressed="true"]')
 
