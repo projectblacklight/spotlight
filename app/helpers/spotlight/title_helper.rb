@@ -32,7 +32,9 @@ module Spotlight
     end
 
     def set_html_page_title(title = nil)
-      @page_title = strip_tags(t(:'spotlight.html_title', title: title || t(:'.title', default: :'.header'), application_name:)).html_safe
+      html_title = strip_tags(t(:'spotlight.html_title', title: title || t(:'.title', default: :'.header'), application_name:)).html_safe
+      content_for(:page_title, html_title, flush: true)
+      html_title
     end
   end
 end
