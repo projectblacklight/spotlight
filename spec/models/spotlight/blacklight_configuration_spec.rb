@@ -285,7 +285,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.blacklight_config.show_fields).to include('a')
     end
 
-    it 'orders the fields by weight' do
+    it 'orders the index fields by weight' do
       subject.index_fields['a'] = { enabled: true, weight: 3, list: true }
       subject.index_fields['b'] = { enabled: true, weight: 5, list: true }
       subject.index_fields['c'] = { enabled: true, weight: 1, list: true }
@@ -297,7 +297,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.blacklight_config.index_fields.keys).to eq %w[c a b]
     end
 
-    it 'orders the fields by weight' do
+    it 'orders the show fields by weight' do
       subject.index_fields['a'] = { enabled: true, weight: 3, show: true }
       subject.index_fields['b'] = { enabled: true, weight: 5, show: true }
       subject.index_fields['c'] = { enabled: true, weight: 1, show: true }
