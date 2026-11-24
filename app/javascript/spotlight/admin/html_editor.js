@@ -183,10 +183,18 @@ export function mountHtmlEditor(textarea, tiptap) {
   const openImageDialog = ({ file = null, position = null } = {}) => {
     const editing = !file && editor.isActive("image")
     const attrs = editing ? editor.getAttributes("image") : null
+    // The selection can move while the dialog is open (e.g. the rest of a double click),
+    // so remember which image is being edited.
+    const imagePosition = editing ? editor.state.selection.from : null
     imageDialog.open({ attrs, file }).then((result) => {
       if (!result) return editor.commands.focus()
       if (editing) {
-        editor.chain().focus().updateAttributes("image", result).run()
+        editor
+          .chain()
+          .focus()
+          .setNodeSelection(imagePosition)
+          .updateAttributes("image", result)
+          .run()
       } else {
         editor
           .chain()
@@ -229,8 +237,11 @@ export function mountHtmlEditor(textarea, tiptap) {
       ...imageDropAndPasteProps((file, position) =>
         openImageDialog({ file, position }),
       ),
-      handleDoubleClickOn: (_view, _pos, node) => {
+      handleDoubleClickOn: (_view, _pos, node, nodePos) => {
         if (node.type.name !== "image") return false
+        // Don't rely on the first click having selected the image: the browser may have
+        // moved the selection elsewhere, and the dialog edits the selected image.
+        editor.commands.setNodeSelection(nodePos)
         openImageDialog()
         return true
       },
