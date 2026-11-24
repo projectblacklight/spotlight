@@ -280,14 +280,6 @@ RSpec/NamedSubject:
     - "spec/services/spotlight/exhibit_import_export_service_spec.rb"
     - "spec/services/spotlight/invite_users_service_spec.rb"
 
-# Offense count: 3
-# Configuration parameters: AllowedPatterns.
-# AllowedPatterns: ^expect_, ^assert_
-RSpec/NoExpectationExample:
-  Exclude:
-    - "spec/models/spotlight/custom_translation_extension_spec.rb"
-    - "spec/services/spotlight/exhibit_import_export_service_spec.rb"
-
 # Offense count: 76
 # This cop supports unsafe autocorrection (--autocorrect-all).
 RSpec/ReceiveMessages:
