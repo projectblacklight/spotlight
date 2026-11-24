@@ -43,7 +43,7 @@
   ul.tags {
     text-align: center;
     li {
-      background-color: var(--bs-secondary) !important;
+      background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity, 1)) !important;
       a {
         color: #fff;
       }
@@ -61,7 +61,7 @@ li.dd-item,
     .card-title,
     .autocomplete-title {
       &::after {
-        background-color: var(--bs-warning) !important;
+        background-color: rgba(var(--bs-warning-rgb), var(--bs-bg-opacity, 1)) !important;
         content: "Private";
         margin-left: 3px;
         --spotlight-badge-color: black;
@@ -148,7 +148,7 @@ form.edit_solr_document {
 #document,
 .document {
   .blacklight-exhibit_tags a {
-    background-color: var(--bs-secondary) !important;
+    background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity, 1)) !important;
 
     &:not(:last-child) {
       margin-right: 0.5rem;

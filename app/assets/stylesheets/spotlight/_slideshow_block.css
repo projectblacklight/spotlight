@@ -108,13 +108,13 @@
         color: var(--bs-list-group-active-color);
         background-color: var(--bs-list-group-active-bg);
         border-color: var(--bs-list-group-active-border-color);
+
+        a { color: #fff; }
       }
 
       & + li.active {
         margin-top: calc(-1 * var(--bs-list-group-border-width));
       }
-
-      a { color: #fff; }
     }
   }
 }
