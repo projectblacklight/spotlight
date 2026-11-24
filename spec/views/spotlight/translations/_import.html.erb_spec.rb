@@ -4,8 +4,7 @@ RSpec.describe 'spotlight/translations/_import.html.erb', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
 
   before do
-    allow(view).to receive(:can?).and_return(true)
-    allow(view).to receive(:current_exhibit).and_return(exhibit)
+    allow(view).to receive_messages(can?: true, current_exhibit: exhibit)
     assign(:language, :es)
     I18n.default_locale = 'en'
   end

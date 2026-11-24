@@ -6,20 +6,22 @@ RSpec.describe 'spotlight/catalog/admin.html.erb', type: :view do
   let(:search_header_component) { instance_double(Blacklight::SearchHeaderComponent, render_in: true) }
 
   before do
-    allow(view).to receive(:blacklight_config).and_return(blacklight_config)
     allow(exhibit).to receive(:blacklight_config).and_return(blacklight_config)
-    allow(view).to receive(:spotlight_page_path_for).and_return(nil)
-    allow(view).to receive(:current_exhibit).and_return(exhibit)
-    allow(view).to receive(:new_exhibit_resource_path).and_return('')
-    allow(view).to receive(:exhibit_alt_text_path).and_return('')
-    allow(view).to receive(:reindex_all_exhibit_resources_path).and_return('')
-    allow(view).to receive(:monitor_exhibit_resources_path).and_return('')
     assign(:exhibit, exhibit)
     assign(:response, [])
     stub_template '_zero_results.html.erb' => 'nuffin'
     stub_template '_results_pagination.html.erb' => '0'
     allow(blacklight_config.view_config(:admin_table).search_header_component).to receive(:new).and_return(search_header_component)
-    allow(view).to receive(:can?).and_return(true)
+    allow(view).to receive_messages(
+      blacklight_config: blacklight_config,
+      spotlight_page_path_for: nil,
+      current_exhibit: exhibit,
+      new_exhibit_resource_path: '',
+      exhibit_alt_text_path: '',
+      reindex_all_exhibit_resources_path: '',
+      monitor_exhibit_resources_path: '',
+      can?: true
+    )
   end
 
   it 'renders the sidebar' do

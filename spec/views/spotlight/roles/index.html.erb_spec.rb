@@ -8,8 +8,7 @@ RSpec.describe 'spotlight/roles/index', type: :view do
 
   before do
     assign(:exhibit, exhibit)
-    allow(view).to receive(:exhibit_alt_text_path).and_return('/')
-    allow(view).to receive(:current_exhibit).and_return(exhibit)
+    allow(view).to receive_messages(exhibit_alt_text_path: '/', current_exhibit: exhibit)
     allow(exhibit).to receive(:roles).and_return roles
   end
 

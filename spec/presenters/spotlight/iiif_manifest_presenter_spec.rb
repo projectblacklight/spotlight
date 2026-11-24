@@ -33,19 +33,20 @@ RSpec.describe Spotlight::IiifManifestPresenter do
 
     before do
       allow(spotlight_route_helper).to receive(:manifest_exhibit_solr_document_url).with(uploaded_resource.exhibit, resource).and_return(manifest_url)
-      allow(controller).to receive(:spotlight).and_return(spotlight_route_helper)
 
       allow(blacklight_config).to receive(:view_config).with(:show).and_return(double(title_field: title_field_name))
-      allow(controller).to receive(:blacklight_config).and_return(blacklight_config)
 
       allow(resource).to receive(:first).with(title_field_name).and_return(title_field_value)
       allow(resource).to receive(:first).with(Spotlight::Engine.config.upload_description_field).and_return(description_field_value)
       allow(resource).to receive(:first).with(:spotlight_full_image_width_ssm).and_return(img_width)
       allow(resource).to receive(:first).with(:spotlight_full_image_height_ssm).and_return(img_height)
 
-      allow(subject).to receive(:endpoint).and_return(endpoint)
-      allow(subject).to receive(:id).and_return(id)
-      allow(controller).to receive(:view_context).and_return(helpers)
+      allow(subject).to receive_messages(endpoint: endpoint, id: id)
+      allow(controller).to receive_messages(
+        spotlight: spotlight_route_helper,
+        blacklight_config: blacklight_config,
+        view_context: helpers
+      )
     end
 
     describe '#display_image' do

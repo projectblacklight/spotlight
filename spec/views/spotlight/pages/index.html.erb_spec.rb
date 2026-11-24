@@ -17,13 +17,15 @@ RSpec.describe 'spotlight/pages/index.html.erb', type: :view do
   let(:default_language) { true }
 
   before do
-    allow(view).to receive(:page_collection_name).and_return(:feature_pages)
-    allow(view).to receive(:exhibit_alt_text_path).and_return('/')
-    allow(view).to receive(:update_all_exhibit_feature_pages_path).and_return('/exhibit/features/update_all')
-    allow(view).to receive(:default_language?).and_return(default_language)
     assign(:page, Spotlight::FeaturePage.new)
     assign(:exhibit, exhibit)
-    allow(view).to receive(:current_exhibit).and_return(exhibit)
+    allow(view).to receive_messages(
+      page_collection_name: :feature_pages,
+      exhibit_alt_text_path: '/',
+      update_all_exhibit_feature_pages_path: '/exhibit/features/update_all',
+      default_language?: default_language,
+      current_exhibit: exhibit
+    )
   end
 
   it 'renders a list of pages' do

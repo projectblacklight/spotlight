@@ -347,9 +347,9 @@ RSpec.describe Spotlight::Exhibit, type: :model do
     end
 
     before do
-      allow(subject).to receive(:blacklight_config).and_return(blacklight_config)
-      allow(subject).to receive(:slug).and_return(slug)
-      allow(subject).to receive(:filters).and_return([filter])
+      allow(subject).to receive_messages(blacklight_config:, slug:)
+      # filter depends on the stubbed slug, so it must be built after the stub above is in place
+      allow(subject).to receive_messages(filters: [filter])
     end
 
     it 'enumerates the documents in the exhibit' do

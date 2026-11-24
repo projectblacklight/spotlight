@@ -25,18 +25,20 @@ RSpec.describe 'spotlight/about_pages/index.html.erb', type: :view do
   let(:default_language) { true }
 
   before do
-    allow(view).to receive(:disable_save_pages_button?).and_return(false)
-    allow(view).to receive(:page_collection_name).and_return(:about_pages)
-    allow(view).to receive(:update_all_exhibit_about_pages_path).and_return('/exhibit/about/update_all')
-    allow(view).to receive(:exhibit_contacts_path).and_return('/exhibit/1/contacts')
-    allow(view).to receive(:exhibit_alt_text_path).and_return('/exhibit/1/alt-text')
-    allow(view).to receive(:default_language?).and_return(default_language)
     allow(exhibit).to receive_messages(contacts:)
     assign(:page, Spotlight::AboutPage.new)
     assign(:exhibit, exhibit)
-    allow(view).to receive(:current_exhibit).and_return(exhibit)
     view.lookup_context.prefixes << 'spotlight/pages'
-    allow(view).to receive(:can?).and_return(true)
+    allow(view).to receive_messages(
+      disable_save_pages_button?: false,
+      page_collection_name: :about_pages,
+      update_all_exhibit_about_pages_path: '/exhibit/about/update_all',
+      exhibit_contacts_path: '/exhibit/1/contacts',
+      exhibit_alt_text_path: '/exhibit/1/alt-text',
+      default_language?: default_language,
+      current_exhibit: exhibit,
+      can?: true
+    )
   end
 
   it 'renders a list of pages and contacts' do

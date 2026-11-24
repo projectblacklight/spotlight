@@ -14,18 +14,20 @@ RSpec.describe 'spotlight/searches/edit.html.erb', type: :view do
 
   before do
     view.extend(Spotlight::ApplicationHelper)
-    allow(view).to receive(:search_action_path).and_return('/search')
-    allow(view).to receive(:mastheads_path).and_return('/mastheads')
-    allow(view).to receive(:featured_images_path).and_return('/featured_images')
-    allow(view).to receive(:exhibit_search_path).and_return('/search')
-    allow(view).to receive(:exhibit_searches_path).and_return('/searches')
-    allow(view).to receive(:exhibit_alt_text_path).and_return('/alt-text')
-    allow(view).to receive(:blacklight_config).and_return(blacklight_config)
     allow(controller).to receive(:search_state_class).and_return(Blacklight::SearchState)
 
     assign(:exhibit, exhibit)
     assign(:search, search)
-    allow(view).to receive(:current_exhibit).and_return(exhibit)
+    allow(view).to receive_messages(
+      search_action_path: '/search',
+      mastheads_path: '/mastheads',
+      featured_images_path: '/featured_images',
+      exhibit_search_path: '/search',
+      exhibit_searches_path: '/searches',
+      exhibit_alt_text_path: '/alt-text',
+      blacklight_config: blacklight_config,
+      current_exhibit: exhibit
+    )
   end
 
   it 'renders a form w/ the appropriate autocomplete data attribute' do

@@ -9,10 +9,16 @@ RSpec.describe 'spotlight/dashboards/analytics.html.erb', type: :view do
   end
 
   before do
-    allow(current_exhibit).to receive(:page_analytics).and_return(data)
-    allow(current_exhibit).to receive(:analytics).and_return(data)
-    allow(current_exhibit).to receive(:analytics_provider).and_return(instance_double(Spotlight::Analytics::Ga, enabled?: enabled))
-    allow(view).to receive_messages(current_exhibit:, exhibit_root_path: '/some/path', analytics_exhibit_dashboard_path: '/some/path')
+    allow(current_exhibit).to receive_messages(
+      page_analytics: data,
+      analytics: data,
+      analytics_provider: instance_double(Spotlight::Analytics::Ga, enabled?: enabled)
+    )
+    allow(view).to receive_messages(
+      current_exhibit:,
+      exhibit_root_path: '/some/path',
+      analytics_exhibit_dashboard_path: '/some/path'
+    )
   end
 
   context 'without a configured analytics integration' do
