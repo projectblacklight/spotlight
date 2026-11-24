@@ -316,11 +316,6 @@ RSpec/ReceiveMessages:
     - "spec/views/spotlight/searches/edit.html.erb_spec.rb"
     - "spec/views/spotlight/translations/_import.html.erb_spec.rb"
 
-# Offense count: 2
-RSpec/RepeatedDescription:
-  Exclude:
-    - "spec/models/spotlight/blacklight_configuration_spec.rb"
-
 # Offense count: 3
 RSpec/RepeatedExampleGroupBody:
   Exclude:
