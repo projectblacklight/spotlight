@@ -294,13 +294,6 @@ RSpec/NoExpectationExample:
     - "spec/models/spotlight/custom_translation_extension_spec.rb"
     - "spec/services/spotlight/exhibit_import_export_service_spec.rb"
 
-# Offense count: 4
-RSpec/PendingWithoutReason:
-  Exclude:
-    - "spec/features/import_exhibit_spec.rb"
-    - "spec/features/javascript/blocks/featured_pages_block_spec.rb"
-    - "spec/i18n_spec.rb"
-
 # Offense count: 76
 # This cop supports unsafe autocorrection (--autocorrect-all).
 RSpec/ReceiveMessages:

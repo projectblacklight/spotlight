@@ -10,7 +10,7 @@ RSpec.describe 'Allow exhibit admins to import and export content from an exhibi
     login_as user
   end
 
-  pending 'should allow admins to export content from an exhibit' do
+  it 'allows admins to export content from an exhibit' do
     pending(%(There's not really any good way to test the contents of a
 downloaded file with Poltergeist (which is now necessary since we've moved
 the export option behind a bootstrap tab)))

@@ -7,12 +7,12 @@ RSpec.describe 'I18n' do
   let(:missing_keys) { i18n.missing_keys }
   let(:unused_keys) { i18n.unused_keys }
 
-  xit 'does not have missing keys' do
+  it 'does not have missing keys', skip: 'i18n-tasks cannot yet scan this codebase reliably (e.g. relative keys in app/components)' do
     expect(missing_keys).to be_empty,
                             "Missing #{missing_keys.leaves.count} i18n keys, run `i18n-tasks missing' to show them"
   end
 
-  xit 'does not have unused keys' do
+  it 'does not have unused keys', skip: 'i18n-tasks cannot yet scan this codebase reliably (e.g. relative keys in app/components)' do
     expect(unused_keys).to be_empty,
                            "#{unused_keys.leaves.count} unused i18n keys, run `i18n-tasks unused' to show them"
   end

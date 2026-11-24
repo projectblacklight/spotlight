@@ -44,7 +44,7 @@ RSpec.describe 'Featured Pages Blocks', :js, type: :feature do
     expect(page).to be_axe_clean.within '#content'
   end
 
-  pending 'persists the user selected sort order' do
+  it 'persists the user selected sort order' do
     pending('Prefetched autocomplete does not work the same way as solr-backed autocompletes')
     visit spotlight.exhibit_home_page_path(exhibit, exhibit.home_page)
 
