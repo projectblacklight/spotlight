@@ -13,8 +13,6 @@ RSpec.describe Spotlight::Masthead, type: :model do
   describe '#display?' do
     subject { masthead.display? }
 
-    let(:image) { OpenStruct.new }
-
     context 'when the masthead is set to not display' do
       it { is_expected.to be_falsey }
     end
