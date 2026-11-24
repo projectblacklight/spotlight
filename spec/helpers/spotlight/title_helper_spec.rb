@@ -6,9 +6,9 @@ RSpec.describe Spotlight::TitleHelper, type: :helper do
   end
 
   describe '#page_title' do
-    it 'sets the @page_title ivar' do
+    it 'sets the page_title content' do
       helper.page_title('Section', 'Title')
-      title = helper.instance_variable_get(:@page_title)
+      title = helper.content_for(:page_title)
       expect(title).to eq 'Section - Title | Application'
     end
 
@@ -27,16 +27,16 @@ RSpec.describe Spotlight::TitleHelper, type: :helper do
       expect(title).to have_css 'h1', text: 'Section'
       expect(title).to have_no_css 'h1 small'
 
-      title = helper.instance_variable_get(:@page_title)
+      title = helper.content_for(:page_title)
       expect(title).to eq 'Section | Application'
     end
   end
 
   describe '#set_html_page_title' do
-    it 'assigns the @page_title ivar' do
+    it 'sets the page_title content' do
       allow(helper).to receive_messages(application_name: 'B')
       helper.set_html_page_title 'A'
-      title = helper.instance_variable_get(:@page_title)
+      title = helper.content_for(:page_title)
       expect(title).to eq 'A | B'
     end
 
