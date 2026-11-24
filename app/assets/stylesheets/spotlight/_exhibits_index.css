@@ -1,14 +1,13 @@
-$exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
-
 .exhibit-card {
   overflow-y: hidden;
   padding-bottom: 3rem;
 
   .unpublished,
   .previewable {
-    @extend .mx-auto;
+    margin-left: auto !important;
+    margin-right: auto !important;
     display: block;
-    font-size: $font-size-sm;
+    font-size: var(--spotlight-font-size-sm);
     margin-top: -1.5rem;
     position: absolute;
     left: 0;
@@ -45,7 +44,8 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
     border-bottom-right-radius: calc(0.25rem - 1px);
     display: flex;
     flex-direction: column;
-    padding: $exhibit-card-overlay-padding;
+    /* in bootstrap 6 this variable is --card-img-overlay-padding  */
+    padding: calc(var(--bs-card-img-overlay-padding) * 0.5);
     top: inherit;
     max-height: 100%;
   }
@@ -56,7 +56,7 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
     max-height: 0;
     outline: none;
     overflow-y: hidden;
-    transition: $transition-base;
+    transition: all .2s ease-in-out;
   }
 
   .subtitle {
@@ -70,7 +70,7 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
   .description {
     -webkit-box-orient: vertical;
     display: -webkit-box;
-    font-size: $font-size-sm;
+    font-size: var(--spotlight-font-size-sm);
     -webkit-line-clamp: 15;
     overflow: hidden;
   }
@@ -82,10 +82,10 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
   }
 
   &:focus-within {
-    // Use Bootstrap focus style
-    outline: $input-focus-border-color auto 5px;
+    /* Use Bootstrap focus style */
+    outline: var(--spotlight-input-focus-border-color) auto 5px;
 
-    // Use WebKit focus styles if available
+    /* Use WebKit focus styles if available */
     @supports (-webkit-appearance: none) {
       outline-color: -webkit-focus-ring-color;
     }
@@ -95,7 +95,7 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
     }
   }
 
-  @media (min-width: breakpoint-min("sm")) and (max-width: breakpoint-max("sm")) {
+  @media (min-width: 576px) and (max-width: 767.98px) {
     &:hover {
       .exhibit-description {
         max-height: 215px;
@@ -117,7 +117,7 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
     }
   }
 
-  @media (min-width: breakpoint-min("md")) and (max-width: breakpoint-max("lg")) {
+  @media (min-width: 768px) and (max-width: 991.98px) {
     .description {
       -webkit-line-clamp: 4;
     }
@@ -127,7 +127,7 @@ $exhibit-card-overlay-padding: $card-img-overlay-padding * 0.5 !default;
     }
   }
 
-  @media (min-width: breakpoint-max("lg")) {
+  @media (min-width: 992px) {
     &:hover {
       .exhibit-description {
         max-height: 230px;

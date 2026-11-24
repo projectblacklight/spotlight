@@ -4,7 +4,7 @@
   }
 
   .browse-category-title {
-    margin-bottom: $spacer;
+    margin-bottom: 1rem;
 
     label {
       font-weight: normal;
@@ -12,7 +12,7 @@
   }
 
   .browse-category-description {
-    margin-bottom: $spacer * 2;
+    margin-bottom: 2rem;
   }
 
   .table.table-striped th {
@@ -21,18 +21,18 @@
 }
 
 .translation-subheading {
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid var(--bs-border-color);
   margin-bottom: 20px;
-  @extend .mt-4;
+  margin-top: 1.5rem !important;
 }
 
 .form-group.translation-form {
   .col-form-label {
-    padding-top: $card-spacer-y + $spacer;
+    padding-top: 2rem;
   }
 
   .translation-complete {
-    padding-top: $card-spacer-y + $spacer;
+    padding-top: 2rem;
   }
 }
 
@@ -69,12 +69,12 @@
 }
 
 .browse-translations-header {
-  border-bottom: 1px solid $border-color;
-  color: $gray-600;
+  border-bottom: 1px solid var(--bs-border-color);
+  color: var(--bs-gray-600);
   display: block;
-  font-size: $h4-font-size;
+  font-size: calc(var(--bs-body-font-size) * 1.5);
   font-weight: bold;
-  margin-bottom: $spacer * 2;
-  margin-top: $spacer;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
   padding-bottom: 3px;
 }
