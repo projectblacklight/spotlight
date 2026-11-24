@@ -20,6 +20,17 @@ RSpec.describe Spotlight::HomePage, type: :model do
     end
   end
 
+  describe 'content type' do
+    it 'uses the default content type when there is no choice of editors' do
+      expect(FactoryBot.create(:exhibit).home_page.read_attribute(:content_type)).to be_nil
+    end
+
+    it 'uses the first configured content type when there is a choice of editors' do
+      allow(Spotlight::Engine.config).to receive(:page_content_types).and_return(%w[Html SirTrevor])
+      expect(FactoryBot.create(:exhibit).home_page.content_type).to eq 'Html'
+    end
+  end
+
   describe 'should_display_title?' do
     it 'returns the display_title attribute' do
       home_page.display_title = true

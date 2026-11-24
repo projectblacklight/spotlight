@@ -27,6 +27,10 @@
         <%= t(:'.new_page') %> <%= blacklight_icon('chevron_right') %>
         <span data-title-field="true" class="input-field">
           <%= f.text_field(:title) %>
+          <% if page_content_type_options.many? %>
+            <%= f.label :content_type, t(:'.content_type'), class: 'visually-hidden' %>
+            <%= f.select :content_type, page_content_type_options %>
+          <% end %>
           <%= f.submit t(:'.save'), data: {behavior: "save"} %>
           <%= f.submit t(:'.cancel'), data: {behavior: "cancel"} %>
         </span>
