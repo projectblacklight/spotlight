@@ -360,8 +360,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
   describe 'next and previous documents' do
     before do
       exhibit.searches.first.update(published: true)
-      allow(controller).to receive(:current_search_session).and_return(search)
-      allow(controller).to receive(:search_session).and_return(search_session)
+      allow(controller).to receive_messages(current_search_session: search, search_session: search_session)
     end
 
     let(:search_session) { { 'counter' => 2 } }
@@ -537,11 +536,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
     let(:current_browse_category) { FactoryBot.create(:search, exhibit:, query_params: { q: 'Search String' }) }
 
     before do
-      allow(controller).to receive_messages(
-        current_exhibit: exhibit,
-        search_session:,
-        current_browse_category:
-      )
+      allow(controller).to receive_messages(current_exhibit: exhibit, search_session:, current_browse_category:)
     end
 
     it 'sends the current browse category\'s query params to #previous_and_next_documents_for_search' do

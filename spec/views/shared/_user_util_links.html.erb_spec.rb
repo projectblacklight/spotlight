@@ -4,10 +4,12 @@ RSpec.describe 'shared/_user_util_links', type: :view do
   let(:current_exhibit) { FactoryBot.create(:exhibit) }
 
   before do
-    allow(view).to receive(:blacklight_config).and_return(Blacklight::Configuration.new)
-    allow(view).to receive(:current_user).and_return(current_user)
-    allow(view).to receive(:current_exhibit).and_return(current_exhibit)
-    allow(view).to receive_messages(show_contact_form?: true)
+    allow(view).to receive_messages(
+      blacklight_config: Blacklight::Configuration.new,
+      current_user:,
+      current_exhibit:,
+      show_contact_form?: true
+    )
   end
 
   describe 'when user is not logged in' do

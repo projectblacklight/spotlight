@@ -14,11 +14,8 @@ RSpec.describe 'spotlight/searches/_search.html.erb', type: :view do
   let(:thumbnail) { double(id: '7777', iiif_url: '/images/7777/full/400,300/0/default.jpg') }
 
   before do
-    allow(view).to receive(:edit_search_path).and_return('/edit')
-    allow(view).to receive(:search_path).and_return('/search')
-    allow(search).to receive(:thumbnail).and_return(thumbnail)
-    allow(search).to receive(:count).and_return(15)
-    allow(search).to receive(:params).and_return({})
+    allow(view).to receive_messages(edit_search_path: '/edit', search_path: '/search')
+    allow(search).to receive_messages(thumbnail: thumbnail, count: 15, params: {})
 
     form_for(search, url: '/update') do |f|
       @f = f

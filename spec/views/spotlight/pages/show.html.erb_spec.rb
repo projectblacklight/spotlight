@@ -10,11 +10,13 @@ RSpec.describe 'spotlight/pages/show', type: :view do
   end
 
   before do
-    allow(view).to receive(:current_exhibit).and_return(exhibit)
-    allow(view).to receive(:blacklight_config).and_return(Blacklight.default_configuration)
-    allow(view).to receive(:render_body_class).and_return('')
-    allow(view).to receive(:add_page_meta_content).and_return('')
-    allow(view).to receive(:description).and_return('')
+    allow(view).to receive_messages(
+      current_exhibit: exhibit,
+      blacklight_config: Blacklight.default_configuration,
+      render_body_class: '',
+      add_page_meta_content: '',
+      description: ''
+    )
     assign(:page, page)
     stub_template 'spotlight/pages/_sidebar.html.erb' => 'Sidebar'
   end
@@ -48,10 +50,14 @@ RSpec.describe 'spotlight/pages/show', type: :view do
       stub_template 'shared/_user_util_links.html.erb' => ''
       allow(view).to receive_messages(current_masthead: nil, resource_masthead?: false)
       allow(Spotlight::MastheadComponent).to receive(:new).and_return(instance_double(Spotlight::MastheadComponent, render_in: ''))
-      allow(view).to receive_messages(document_presenter: presenter, action_name: 'show', blacklight_config:)
-      allow(view).to receive(:content?).and_return(true)
-      allow(view).to receive(:search_action_url).and_return('/catalog')
-      allow(view).to receive(:add_exhibit_meta_content).and_return('')
+      allow(view).to receive_messages(
+        document_presenter: presenter,
+        action_name: 'show',
+        blacklight_config:,
+        content?: true,
+        search_action_url: '/catalog',
+        add_exhibit_meta_content: ''
+      )
       render template: 'spotlight/pages/show', layout: 'layouts/spotlight/spotlight'
     end
 

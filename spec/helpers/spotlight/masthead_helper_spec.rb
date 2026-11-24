@@ -5,8 +5,7 @@ RSpec.describe Spotlight::MastheadHelper, type: :helper do
   let(:site) { Spotlight::Site.instance }
 
   before do
-    allow(helper).to receive(:current_exhibit).and_return(nil)
-    allow(helper).to receive(:current_site).and_return(site)
+    allow(helper).to receive_messages(current_exhibit: nil, current_site: site)
   end
 
   describe '#masthead_heading_content' do

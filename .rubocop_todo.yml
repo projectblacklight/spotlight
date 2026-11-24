@@ -280,28 +280,6 @@ RSpec/NamedSubject:
     - "spec/services/spotlight/exhibit_import_export_service_spec.rb"
     - "spec/services/spotlight/invite_users_service_spec.rb"
 
-# Offense count: 76
-# This cop supports unsafe autocorrection (--autocorrect-all).
-RSpec/ReceiveMessages:
-  Exclude:
-    - "spec/components/spotlight/exhibit_navbar_component_spec.rb"
-    - "spec/controllers/spotlight/catalog_controller_spec.rb"
-    - "spec/helpers/spotlight/masthead_helper_spec.rb"
-    - "spec/lib/migration/iiif_spec.rb"
-    - "spec/models/spotlight/exhibit_spec.rb"
-    - "spec/presenters/spotlight/iiif_manifest_presenter_spec.rb"
-    - "spec/views/shared/_user_util_links.html.erb_spec.rb"
-    - "spec/views/spotlight/about_pages/index.html.erb_spec.rb"
-    - "spec/views/spotlight/catalog/admin.html.erb_spec.rb"
-    - "spec/views/spotlight/contacts/edit.html.erb_spec.rb"
-    - "spec/views/spotlight/dashboards/analytics.html.erb_spec.rb"
-    - "spec/views/spotlight/pages/index.html.erb_spec.rb"
-    - "spec/views/spotlight/pages/show.html.erb_spec.rb"
-    - "spec/views/spotlight/roles/index.html.erb_spec.rb"
-    - "spec/views/spotlight/searches/_search.html.erb_spec.rb"
-    - "spec/views/spotlight/searches/edit.html.erb_spec.rb"
-    - "spec/views/spotlight/translations/_import.html.erb_spec.rb"
-
 # Offense count: 69
 RSpec/SubjectStub:
   Exclude:

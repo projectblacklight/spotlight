@@ -6,10 +6,14 @@ RSpec.describe Spotlight::ExhibitNavbarComponent, type: :component do
   end
 
   before do
-    allow(vc_test_controller).to receive_messages(enabled_in_spotlight_view_type_configuration?: true, current_exhibit:, field_enabled?: true)
-    allow(vc_test_controller).to receive(:search_action_url).and_return('/catalog')
-    allow(vc_test_controller).to receive(:blacklight_config).and_return(CatalogController.blacklight_config)
-    allow(vc_test_controller).to receive_messages(resource_masthead?: false)
+    allow(vc_test_controller).to receive_messages(
+      enabled_in_spotlight_view_type_configuration?: true,
+      current_exhibit:,
+      field_enabled?: true,
+      search_action_url: '/catalog',
+      blacklight_config: CatalogController.blacklight_config,
+      resource_masthead?: false
+    )
     allow(vc_test_controller).to receive(:render).and_call_original
     allow(vc_test_controller).to receive(:render).with(Blacklight::SearchBarComponent).and_return('Search Bar')
     allow(vc_test_controller).to receive_messages(exhibit_path: spotlight.exhibit_path(current_exhibit))

@@ -8,13 +8,15 @@ RSpec.describe 'spotlight/contacts/edit.html.erb' do
   end
 
   before do
-    allow(view).to receive(:exhibit_contacts_path).and_return('/exhibit/1/contacts')
-    allow(view).to receive(:exhibit_about_pages_path).and_return('/exhibit/admin/about')
-    allow(view).to receive(:exhibit_alt_text_path).and_return('/exhibit/1/alt-text')
-    allow(view).to receive(:contact_images_path).and_return('/contact_images')
     assign(:contact, contact)
     assign(:exhibit, exhibit)
-    allow(view).to receive(:current_exhibit).and_return(exhibit)
+    allow(view).to receive_messages(
+      exhibit_contacts_path: '/exhibit/1/contacts',
+      exhibit_about_pages_path: '/exhibit/admin/about',
+      exhibit_alt_text_path: '/exhibit/1/alt-text',
+      contact_images_path: '/contact_images',
+      current_exhibit: exhibit
+    )
     # Assumes that the second backend is the "Simple"
     I18n.backend.backends.second.store_translations(
       :en,
