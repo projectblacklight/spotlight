@@ -102,7 +102,7 @@ RSpec.describe Spotlight::Controller do
 
   describe '#resource_masthead?' do
     it 'is false by default' do
-      expect(subject.resource_masthead?).to eq false
+      expect(subject.resource_masthead?).to be false
     end
   end
 

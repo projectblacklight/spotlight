@@ -453,7 +453,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
       let(:field) { Blacklight::Configuration::SortField.new enabled: true }
 
       it 'uses the enabled property for sort fields' do
-        expect(controller.field_enabled?(field)).to eq true
+        expect(controller.field_enabled?(field)).to be true
       end
     end
 
@@ -461,7 +461,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
       let(:field) { Blacklight::Configuration::SearchField.new enabled: true }
 
       it 'uses the enabled property for search fields' do
-        expect(controller.field_enabled?(field)).to eq true
+        expect(controller.field_enabled?(field)).to be true
       end
     end
 
@@ -479,7 +479,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
 
     it 'returns the value of the original if condition' do
       allow(field).to receive(:original).and_return false
-      expect(controller.field_enabled?(field)).to eq false
+      expect(controller.field_enabled?(field)).to be false
     end
   end
 
@@ -492,18 +492,18 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
 
     it 'respects the original if condition' do
       view.original = false
-      expect(controller.enabled_in_spotlight_view_type_configuration?(view)).to eq false
+      expect(controller.enabled_in_spotlight_view_type_configuration?(view)).to be false
     end
 
     it 'is true if there is no exhibit context' do
       allow(controller).to receive(:current_exhibit).and_return(nil)
-      expect(controller.enabled_in_spotlight_view_type_configuration?(view)).to eq true
+      expect(controller.enabled_in_spotlight_view_type_configuration?(view)).to be true
     end
 
     it "is true if we're in a page context" do
       allow(controller).to receive(:current_exhibit).and_return(nil)
       allow(controller).to receive(:is_a?).with(Spotlight::PagesController).and_return(true)
-      expect(controller.enabled_in_spotlight_view_type_configuration?(view)).to eq true
+      expect(controller.enabled_in_spotlight_view_type_configuration?(view)).to be true
     end
   end
 

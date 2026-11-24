@@ -87,7 +87,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
 
     it 'respects upstream configuration that disables the field entirely' do
       blacklight_config.add_facet_field 'a', if: false
-      expect(subject.blacklight_config.facet_fields['a'].if).to eq false
+      expect(subject.blacklight_config.facet_fields['a'].if).to be false
     end
 
     context 'with custom fields' do
@@ -102,8 +102,8 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
         expect(subject.blacklight_config.facet_fields).to include('a')
         expect(subject.blacklight_config.facet_fields['a'].show).to be_falsey
         expect(subject.blacklight_config.facet_fields['a'].if).to eq :field_enabled?
-        expect(subject.blacklight_config.facet_fields['a'].enabled).to eq false
-        expect(subject.blacklight_config.facet_fields['a'].limit).to eq true
+        expect(subject.blacklight_config.facet_fields['a'].enabled).to be false
+        expect(subject.blacklight_config.facet_fields['a'].limit).to be true
         expect(subject.blacklight_config.facet_fields['a'].original).to be_blank
       end
 
@@ -111,9 +111,9 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
         blacklight_config.add_index_field 'a', some_param: true, enabled: false
         subject.exhibit.custom_fields.create! field: 'a'
 
-        expect(subject.blacklight_config.index_fields['a'].custom_field).to eq true
-        expect(subject.blacklight_config.index_fields['a'].some_param).to eq true
-        expect(subject.blacklight_config.index_fields['a'].enabled).to eq false
+        expect(subject.blacklight_config.index_fields['a'].custom_field).to be true
+        expect(subject.blacklight_config.index_fields['a'].some_param).to be true
+        expect(subject.blacklight_config.index_fields['a'].enabled).to be false
       end
     end
 
@@ -318,8 +318,8 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       end
 
       it 'only shows titles (i.e., no metadata) for gallery view' do
-        expect(subject.blacklight_config.index_fields['a'][:list]).to eq true
-        expect(subject.blacklight_config.index_fields['a'][:gallery]).to eq false
+        expect(subject.blacklight_config.index_fields['a'][:list]).to be true
+        expect(subject.blacklight_config.index_fields['a'][:gallery]).to be false
       end
     end
   end
@@ -379,7 +379,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
 
     it 'is disabled when enabled = false' do
       blacklight_config.add_sort_field 'a', enabled: false
-      expect(subject.blacklight_config.sort_fields['a'].enabled).to eq false
+      expect(subject.blacklight_config.sort_fields['a'].enabled).to be false
     end
   end
 
@@ -412,12 +412,12 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
 
     it 'respects upstream configuration that disables the field entirely' do
       blacklight_config.add_search_field 'a', if: false
-      expect(subject.blacklight_config.search_fields['a'].if).to eq false
+      expect(subject.blacklight_config.search_fields['a'].if).to be false
     end
 
     it 'is disabled when enabled = false' do
       blacklight_config.add_search_field 'a', enabled: false
-      expect(subject.blacklight_config.search_fields['a'].enabled).to eq false
+      expect(subject.blacklight_config.search_fields['a'].enabled).to be false
     end
 
     context 'with custom fields' do
@@ -546,7 +546,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       expect(subject.custom_facet_fields).to include 'abc', 'xyz'
       expect(subject.custom_facet_fields['abc']).to be_a Blacklight::Configuration::Field
       expect(subject.custom_facet_fields['abc'].a).to eq 1
-      expect(subject.custom_facet_fields['abc'].custom_field).to eq true
+      expect(subject.custom_facet_fields['abc'].custom_field).to be true
     end
   end
 
@@ -560,7 +560,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       expect(custom_index_fields).to include 'abc', 'xyz'
       expect(custom_index_fields['abc']).to be_a Blacklight::Configuration::Field
       expect(custom_index_fields['abc'].a).to eq 1
-      expect(custom_index_fields['abc'].custom_field).to eq true
+      expect(custom_index_fields['abc'].custom_field).to be true
     end
   end
 
@@ -574,7 +574,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       expect(custom_search_fields).to include 'a', 'b'
       expect(custom_search_fields['a']).to be_a Blacklight::Configuration::Field
       expect(custom_search_fields['a'].solr_parameters).to eq(qf: 'abc')
-      expect(custom_search_fields['a'].custom_field).to eq true
+      expect(custom_search_fields['a'].custom_field).to be true
     end
   end
 
@@ -592,7 +592,7 @@ RSpec.describe Spotlight::BlacklightConfiguration, type: :model do
       end
 
       it 'is hidden from the search field selector' do
-        expect(search_field.if).to eq false
+        expect(search_field.if).to be false
       end
 
       it "uses the engine's autocomplete parameters" do

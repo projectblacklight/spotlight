@@ -457,7 +457,7 @@ RSpec.describe Spotlight::Exhibit, type: :model do
       expect(persisted_exhibit.title).to eq 'Sample'
       I18n.locale = 'es'
       persisted_exhibit.reload
-      expect(persisted_exhibit.translated_title(default: '')).to eq nil
+      expect(persisted_exhibit.translated_title(default: '')).to be_nil
     end
   end
 end

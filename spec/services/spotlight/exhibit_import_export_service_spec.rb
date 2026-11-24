@@ -119,7 +119,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
     context 'with a theme that does not exist in the destination' do
       it 'ignores the invalid theme' do
         source_exhibit.theme = 'xyz'
-        expect(subject.theme).to eq nil
+        expect(subject.theme).to be_nil
       end
     end
 
