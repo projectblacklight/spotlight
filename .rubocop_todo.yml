@@ -176,12 +176,6 @@ RSpec/ExpectInHook:
     - "spec/lib/migration/iiif_spec.rb"
     - "spec/views/spotlight/catalog/_edit_default.html.erb_spec.rb"
 
-# Offense count: 2
-RSpec/IdenticalEqualityAssertion:
-  Exclude:
-    - "spec/models/solr_document_spec.rb"
-    - "spec/models/spotlight/site_spec.rb"
-
 # Offense count: 73
 # Configuration parameters: Max, AllowedIdentifiers, AllowedPatterns.
 RSpec/IndexedLet:

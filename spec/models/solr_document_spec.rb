@@ -41,7 +41,11 @@ RSpec.describe SolrDocument, type: :model do
   end
 
   it 'has ==' do
-    expect(described_class.find('dq287tq6352')).to eq described_class.find('dq287tq6352')
+    document = described_class.find('dq287tq6352')
+    same_document = described_class.find('dq287tq6352')
+
+    expect(document).not_to equal same_document
+    expect(document).to eq same_document
   end
 
   describe 'GlobalID' do
