@@ -333,12 +333,6 @@ RSpec/RepeatedExampleGroupBody:
   Exclude:
     - "spec/controllers/spotlight/featured_images_controller_spec.rb"
 
-# Offense count: 2
-RSpec/SubjectDeclaration:
-  Exclude:
-    - "spec/models/sir_trevor_rails/blocks/textable_spec.rb"
-    - "spec/presenters/spotlight/iiif_manifest_presenter_spec.rb"
-
 # Offense count: 69
 RSpec/SubjectStub:
   Exclude:
