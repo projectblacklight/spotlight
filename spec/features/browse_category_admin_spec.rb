@@ -137,7 +137,7 @@ RSpec.describe 'Browse Category Administration', type: :feature do
 
     it 'can configure a search box' do
       visit spotlight.edit_exhibit_search_path exhibit, search
-      expect(search.search_box).to eq false
+      expect(search.search_box).to be false
 
       check 'Display search box'
 
@@ -145,7 +145,7 @@ RSpec.describe 'Browse Category Administration', type: :feature do
       expect(page).to have_text('The browse category was successfully updated.')
       search.reload
 
-      expect(search.search_box).to eq true
+      expect(search.search_box).to be true
     end
 
     it 'can select a default index view type' do

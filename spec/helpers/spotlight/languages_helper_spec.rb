@@ -59,19 +59,19 @@ RSpec.describe Spotlight::LanguagesHelper, type: :helper do
   describe '#default_language?' do
     context 'when using default locale' do
       it do
-        expect(helper.default_language?).to eq true
+        expect(helper.default_language?).to be true
       end
 
       it do
         allow(helper).to receive_messages(params: { locale: :en })
-        expect(helper.default_language?).to eq true
+        expect(helper.default_language?).to be true
       end
     end
 
     context 'when using a different locale' do
       it do
         allow(helper).to receive_messages(params: { locale: :it })
-        expect(helper.default_language?).to eq false
+        expect(helper.default_language?).to be false
       end
     end
   end

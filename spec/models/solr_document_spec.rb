@@ -104,7 +104,7 @@ RSpec.describe SolrDocument, type: :model do
 
     it "includes placeholders for all exhibits' tags" do
       expect(subject.to_solr).to include :"exhibit_#{exhibit.slug}_tags_ssim"
-      expect(subject.to_solr[:"exhibit_#{exhibit.slug}_tags_ssim"]).to eq nil
+      expect(subject.to_solr[:"exhibit_#{exhibit.slug}_tags_ssim"]).to be_nil
     end
 
     it 'includes sidecar fields' do
