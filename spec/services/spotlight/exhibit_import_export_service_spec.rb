@@ -455,7 +455,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
       export = described_class.new(source_exhibit).as_json
       e = FactoryBot.create(:exhibit)
       e.import(export)
-      e.import(export)
+      expect { e.import(export) }.not_to raise_error
     end
 
     it 'is idempotent-ish' do

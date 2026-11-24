@@ -15,10 +15,12 @@ RSpec.describe Spotlight::CustomTranslationExtension do
       expect(subject.current_exhibit).to eq exhibit
     end
 
-    it 'reloads the i18n' do
+    it 'reloads the i18n when the exhibit changes' do
+      subject.current_exhibit = nil
       allow(I18n.backend).to receive(:reload!)
 
       subject.current_exhibit = exhibit
+      expect(I18n.backend).to have_received(:reload!)
     end
   end
 end
