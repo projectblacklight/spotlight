@@ -6,7 +6,8 @@ RSpec.describe SirTrevorRails::Blocks::Textable do
 
     attr_accessor :text
   end
-  let(:subject) { TextableTestClass.new }
+  subject { TextableTestClass.new }
+
   let(:st_blank_text) { '<p><br></p>' }
 
   describe '#text?' do

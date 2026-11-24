@@ -3,12 +3,11 @@
 RSpec.describe Spotlight::IiifManifestPresenter do
   require 'iiif_manifest'
 
+  subject { described_class.new(resource, controller) }
+
   let(:resource) { SolrDocument.new(id: '1-1') }
   let(:uploaded_resource) { FactoryBot.build(:uploaded_resource) }
   let(:controller) { instance_double(Spotlight::CatalogController) }
-
-  let(:subject) { described_class.new(resource, controller) }
-
   let(:profile_url) { 'http://iiif.io/api/image/2/level2.json' }
 
   before do
