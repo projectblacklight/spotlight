@@ -544,13 +544,8 @@ Style/OpenStructUse:
     - "lib/spotlight/engine.rb"
     - "spec/components/spotlight/analytics/aggregation_component_spec.rb"
     - "spec/components/spotlight/analytics/dashboard_component_spec.rb"
-    - "spec/controllers/spotlight/catalog_controller_spec.rb"
-    - "spec/helpers/spotlight/application_helper_spec.rb"
     - "spec/models/spotlight/exhibit_spec.rb"
-    - "spec/models/spotlight/masthead_spec.rb"
     - "spec/views/spotlight/dashboards/analytics.html.erb_spec.rb"
-    - "spec/views/spotlight/metadata_configurations/_metadata_field.html.erb_spec.rb"
-    - "spec/views/spotlight/sir_trevor/blocks/_iframe_block.html.erb_spec.rb"
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).

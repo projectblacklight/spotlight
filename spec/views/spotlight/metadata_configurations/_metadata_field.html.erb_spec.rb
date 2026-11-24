@@ -2,7 +2,7 @@
 
 RSpec.describe 'spotlight/metadata_configurations/_metadata_field', type: :view do
   let(:exhibit) { FactoryBot.create(:exhibit) }
-  let(:field) { Blacklight::Configuration::Field.new label: 'Some label', immutable: OpenStruct.new(another_view_type: false) }
+  let(:field) { Blacklight::Configuration::Field.new label: 'Some label', immutable: Blacklight::OpenStructWithHashAccess.new(another_view_type: false) }
   let(:partial) { 'spotlight/metadata_configurations/metadata_field' }
   let(:f) do
     form_helper = nil

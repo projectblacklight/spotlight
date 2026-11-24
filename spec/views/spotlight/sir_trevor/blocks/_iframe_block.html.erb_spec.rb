@@ -3,7 +3,7 @@
 RSpec.describe 'spotlight/sir_trevor/blocks/_iframe_block.html.erb', type: :view do
   let(:partial) { 'spotlight/sir_trevor/blocks/iframe_block' }
   let(:block) do
-    OpenStruct.new
+    SirTrevorRails::Block.new({ type: 'iframe', data: {} }, nil)
   end
 
   it 'renders iframes' do

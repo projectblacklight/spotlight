@@ -484,7 +484,7 @@ RSpec.describe Spotlight::CatalogController, type: :controller do
   end
 
   describe '#enabled_in_spotlight_view_type_configuration?' do
-    let(:view) { OpenStruct.new }
+    let(:view) { Blacklight::Configuration::ViewConfig.new }
 
     before do
       controller.extend(Blacklight::Catalog)
