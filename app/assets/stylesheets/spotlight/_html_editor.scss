@@ -90,3 +90,64 @@
   max-height: 10rem;
   max-width: 100%;
 }
+
+// Embedded exhibit items (see spotlight/admin/html_editor_embed.js)
+.html-editor-embed {
+  border: var(--bs-border-width) dashed var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  clear: both;
+  margin: 0 0 1rem;
+  padding: 0.5rem;
+
+  &.ProseMirror-selectednode {
+    outline: 3px solid var(--bs-primary);
+  }
+}
+
+.html-editor-embed-header {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.html-editor-embed-name {
+  font-weight: $font-weight-bold;
+  margin-right: auto;
+}
+
+.html-editor-embed-preview {
+  max-height: 30rem;
+  overflow: hidden;
+  pointer-events: none;
+
+  // The preview isn't interactive, so don't show controls that look clickable
+  .zpr-link {
+    display: none;
+  }
+}
+
+.html-editor-dialog.html-editor-embed-dialog {
+  max-width: 48rem;
+}
+
+.html-editor-embed-items {
+  max-height: 24rem;
+  overflow-y: auto;
+
+  .pic img {
+    max-height: 80px;
+    max-width: 80px;
+  }
+
+  .thumbs-list {
+    overflow-x: auto;
+  }
+}
+
+// The embed dialog's search results, shown as a popover (see EmbedDialog#floatPopup)
+auto-complete ul.html-editor-autocomplete-popup {
+  inset: auto;
+  margin: 0;
+  position: fixed;
+}
