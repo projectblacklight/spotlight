@@ -7,7 +7,7 @@ RSpec.describe Spotlight::FeaturedImageUploader do
 
   describe '#extension_allowlist' do
     it 'is the configured array of approved extension to be uploaded' do
-      expect(featured_image_uploader.extension_allowlist).to eq Spotlight::Engine.config.allowed_upload_extensions
+      expect(featured_image_uploader.extension_allowlist).to eq Spotlight::Engine.config.spotlight.allowed_upload_extensions
     end
   end
 

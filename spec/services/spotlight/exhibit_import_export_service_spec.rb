@@ -13,7 +13,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
   end
 
   before do
-    allow(Spotlight::Engine.config).to receive(:exports).and_return(exports)
+    allow(Spotlight::Engine.config.spotlight).to receive(:exports).and_return(exports)
     allow_any_instance_of(Spotlight::Search).to receive(:set_default_featured_image)
     allow_any_instance_of(SolrDocument).to receive(:reindex)
     allow_any_instance_of(Spotlight::Resource).to receive(:reindex)
@@ -551,7 +551,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
     end
 
     before do
-      allow(Spotlight::Engine.config).to receive(:exports).and_return(exports)
+      allow(Spotlight::Engine.config.spotlight).to receive(:exports).and_return(exports)
     end
 
     it 'includes nothing' do
@@ -565,7 +565,7 @@ RSpec.describe Spotlight::ExhibitImportExportService do
     end
 
     before do
-      allow(Spotlight::Engine.config).to receive(:exports).and_return(exports)
+      allow(Spotlight::Engine.config.spotlight).to receive(:exports).and_return(exports)
     end
 
     it 'includes only the page-related data' do

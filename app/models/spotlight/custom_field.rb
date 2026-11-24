@@ -15,7 +15,7 @@ module Spotlight
 
     friendly_id :slug_candidates, use: %i[slugged scoped finders], scope: :exhibit
 
-    scope :facetable, -> { where(field_type: Spotlight::Engine.config.custom_field_types.select { |_k, v| v[:facetable] }.keys) }
+    scope :facetable, -> { where(field_type: Spotlight::Engine.config.spotlight.custom_field_types.select { |_k, v| v[:facetable] }.keys) }
     scope :writeable, -> { where(readonly_field: false) }
 
     before_create do
@@ -60,7 +60,7 @@ module Spotlight
     end
 
     # The component used to render the field on the upload and edit forms,
-    # from the `component` option of the field's entry in Spotlight::Engine.config.custom_field_types
+    # from the `component` option of the field's entry in Spotlight::Engine.config.spotlight.custom_field_types
     def component
       component = field_type_config[:component]
       return Spotlight::SidecarFormFieldComponent if component.blank?
@@ -84,7 +84,7 @@ module Spotlight
     protected
 
     def field_type_config
-      Spotlight::Engine.config.custom_field_types.fetch(field_type.to_s.to_sym, {})
+      Spotlight::Engine.config.spotlight.custom_field_types.fetch(field_type.to_s.to_sym, {})
     end
 
     def blacklight_configuration

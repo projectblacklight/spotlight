@@ -47,11 +47,11 @@ module Spotlight
       end
 
       def collection_id_field
-        Spotlight::Engine.config.iiif_collection_id_field
+        Spotlight::Engine.config.spotlight.iiif_collection_id_field
       end
 
       def add_manifest_url
-        solr_hash[Spotlight::Engine.config.iiif_manifest_field] = url
+        solr_hash[Spotlight::Engine.config.spotlight.iiif_manifest_field] = url
       end
 
       def add_thumbnail_url
@@ -146,7 +146,7 @@ module Spotlight
       end
 
       def full_image_field
-        Spotlight::Engine.config.full_image_field
+        Spotlight::Engine.config.spotlight.full_image_field
       end
 
       def tile_source_field
@@ -154,7 +154,7 @@ module Spotlight
       end
 
       def title_fields
-        Spotlight::Engine.config.iiif_title_fields || blacklight_config.index&.title_field
+        Spotlight::Engine.config.spotlight.iiif_title_fields || blacklight_config.index&.title_field
       end
 
       def sidecar
@@ -166,7 +166,7 @@ module Spotlight
       end
 
       def metadata_class
-        Spotlight::Engine.config.iiif_metadata_class.call
+        Spotlight::Engine.config.spotlight.iiif_metadata_class.call
       end
     end
   end

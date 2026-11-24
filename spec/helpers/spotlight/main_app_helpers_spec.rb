@@ -45,7 +45,7 @@ RSpec.describe Spotlight::MainAppHelpers, type: :helper do
 
     context 'with a default contact address' do
       before do
-        allow(Spotlight::Engine.config).to receive_messages default_contact_email: 'root@localhost'
+        allow(Spotlight::Engine.config.spotlight).to receive_messages default_contact_email: 'root@localhost'
         allow(helper).to receive_messages current_exhibit: exhibit
       end
 

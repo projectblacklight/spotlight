@@ -1,7 +1,7 @@
-<% ga_id = Spotlight::Engine.config.ga_measurement_id.presence || Spotlight::Engine.config.ga_web_property_id %>
+<% ga_id = Spotlight::Engine.config.spotlight.ga_measurement_id.presence || Spotlight::Engine.config.spotlight.ga_web_property_id %>
 <% if ga_id.present? %>
 <!-- Google tag (gtag.js) -->
-<% if Spotlight::Engine.config.ga_debug_mode %>
+<% if Spotlight::Engine.config.spotlight.ga_debug_mode %>
 <script nonce="<%= content_security_policy_nonce %>">window.analyticsDebug = true;</script>
 <% end %>
 <script async nonce="<%= content_security_policy_nonce %>" src="https://www.googletagmanager.com/gtag/js?id=<%= ga_id %>"></script>

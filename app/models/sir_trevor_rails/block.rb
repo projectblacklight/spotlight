@@ -28,7 +28,7 @@ module SirTrevorRails
     # Sets a list of custom block types to speed up lookup at runtime.
     def self.custom_block_types
       # You can define your custom block types directly here or in your engine config.
-      Spotlight::Engine.config.sir_trevor_widgets
+      Spotlight::Engine.config.spotlight.sir_trevor_widgets
     end
 
     def self.custom_block_type_alt_text_settings

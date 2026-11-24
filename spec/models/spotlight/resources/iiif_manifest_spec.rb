@@ -41,7 +41,7 @@ RSpec.describe Spotlight::Resources::IiifManifest do
       end
 
       it 'indexes to multiple fields when configured' do
-        allow(Spotlight::Engine.config).to receive(:iiif_title_fields).at_least(:once).and_return(%w[title_field1 title_field2])
+        allow(Spotlight::Engine.config.spotlight).to receive(:iiif_title_fields).at_least(:once).and_return(%w[title_field1 title_field2])
 
         expect(subject.to_solr(exhibit:)['title_field1']).to eq 'Test Manifest 1'
         expect(subject.to_solr(exhibit:)['title_field2']).to eq 'Test Manifest 1'
@@ -55,7 +55,7 @@ RSpec.describe Spotlight::Resources::IiifManifest do
         it 'uses the configured language to find a value' do
           expect(subject.to_solr(exhibit:)['full_title_tesim']).to eq 'Test Manifest 3'
 
-          allow(Spotlight::Engine.config).to receive(:default_json_ld_language).and_return('fr')
+          allow(Spotlight::Engine.config.spotlight).to receive(:default_json_ld_language).and_return('fr')
           expect(subject.to_solr(exhibit:)['full_title_tesim']).to eq "Manifeste d'essai 3"
         end
       end
@@ -131,7 +131,7 @@ RSpec.describe Spotlight::Resources::IiifManifest do
 
       context 'with a custom metadata class' do
         before do
-          allow(Spotlight::Engine.config).to receive(:iiif_metadata_class).and_return(-> { TestMetadataClass })
+          allow(Spotlight::Engine.config.spotlight).to receive(:iiif_metadata_class).and_return(-> { TestMetadataClass })
         end
 
         it 'merges the solr hash from the configured custom metadata class' do
@@ -161,13 +161,13 @@ RSpec.describe Spotlight::Resources::IiifManifest do
         end
 
         it 'extracts data using the configured default language' do
-          allow(Spotlight::Engine.config).to receive(:default_json_ld_language).and_return('de')
+          allow(Spotlight::Engine.config.spotlight).to receive(:default_json_ld_language).and_return('de')
           expect(subject.to_solr(exhibit:)).to include 'readonly_verfasser_tesim' => ['Murasaki Shikibu -- (GND: 118985655)'],
                                                        'readonly_sprache_tesim' => ['Japanisch']
         end
 
         it 'falls back to a language from the manifest using the IIIF rules' do
-          allow(Spotlight::Engine.config).to receive(:default_json_ld_language).and_return('fr')
+          allow(Spotlight::Engine.config.spotlight).to receive(:default_json_ld_language).and_return('fr')
           expect(subject.to_solr(exhibit:)).to include 'readonly_verfasser_tesim' => ['Murasaki Shikibu -- (GND: 118985655)'],
                                                        'readonly_sprache_tesim' => ['Japanisch']
         end
