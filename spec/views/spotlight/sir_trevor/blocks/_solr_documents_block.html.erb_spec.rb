@@ -38,6 +38,35 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_solr_documents_block.html.erb', typ
     end
   end
 
+  context 'with captions' do
+    let(:block_options) { { thumbnail_image_url: 'http://example.com' } }
+
+    before do
+      allow(block).to receive(:each_document).and_yield(block_options, doc)
+      allow(block).to receive_messages(primary_caption?: true, document_caption: 'Primary caption')
+    end
+
+    it 'places the caption inside a figure with the image' do
+      render partial:, locals: { solr_documents_block: block }
+      expect(rendered).to have_css 'figure img[src="http://example.com"]'
+      expect(rendered).to have_css 'figure figcaption .primary-caption', text: 'Primary caption'
+    end
+  end
+
+  context 'with no image and no caption' do
+    let(:block_options) { {} }
+    let(:thumbnail_presenter) { instance_double(Blacklight::ThumbnailPresenter, exists?: false) }
+
+    before do
+      allow(block).to receive(:each_document).and_yield(block_options, doc)
+    end
+
+    it 'does not render an empty figure' do
+      render partial:, locals: { solr_documents_block: block }
+      expect(rendered).not_to have_css 'figure'
+    end
+  end
+
   context 'with multiple documents' do
     before do
       allow(block).to receive(:each_document).and_yield({ thumbnail_image_url: 'http://example.com', decorative: 'on' }, doc)
