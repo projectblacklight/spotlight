@@ -5,8 +5,8 @@ module Spotlight
   # Base CRUD controller for pages
   class PagesController < Spotlight::ApplicationController
     before_action :authenticate_user!, except: [:show]
-    before_action :load_locale_specific_page, only: %i[destroy edit show update]
     load_and_authorize_resource :exhibit, class: Spotlight::Exhibit
+    before_action :load_locale_specific_page, only: %i[destroy edit show update]
     load_and_authorize_resource through: :exhibit, instance_name: 'page', only: [:index]
 
     helper Openseadragon::OpenseadragonHelper
@@ -175,6 +175,8 @@ module Spotlight
     def load_locale_specific_page
       @page = current_exhibit.pages.for_locale.find(params[:id])
     rescue ActiveRecord::RecordNotFound
+      raise unless action_name == 'show'
+
       redirect_page_to_related_locale_version
     end
 
@@ -201,6 +203,7 @@ module Spotlight
       target = default_page.translated_page_for(I18n.locale) || pages_for_id.default_locale_page
       raise ActiveRecord::RecordNotFound unless target
 
+      authorize! :read, target
       # Pass the locale explicitly. A host app route default (e.g., `locale: nil`) overrides default_url_options.
       locale = target.locale unless target.default_locale?
       redirect_to polymorphic_path([current_exhibit, target], locale:)
