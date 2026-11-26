@@ -30,6 +30,13 @@ RSpec.describe 'spotlight/sir_trevor/blocks/_uploaded_items_block', type: :view 
     expect(rendered).to have_button class: 'zpr-link', count: 3
   end
 
+  it 'associates each caption with its image in a figure' do
+    expect(rendered).to have_css 'figure figcaption.caption', text: 'Caption 1'
+    expect(rendered).to have_css 'figure figcaption.caption', text: 'Caption 3'
+    expect(rendered).to have_css 'figure', count: 3
+    expect(rendered).to have_css 'figcaption', count: 2
+  end
+
   it 'uses the correct alt text' do
     expect(rendered).to have_css 'img[alt="custom alt text"]'
     expect(rendered).to have_css 'img[alt=""]'

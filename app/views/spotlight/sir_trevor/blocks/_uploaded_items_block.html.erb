@@ -4,19 +4,21 @@
       <% uploaded_items_block.files.each do |file| %>
         <div class="box" data-id="<%= file[:id] %>">
           <div class="contents">
-            <% if file[:link].present? %>
-              <%= link_to file[:link], rel: 'ugc' do %>
-                <%= image_tag file[:url], class: 'img-thumbnail', alt: resource_alt_text(file, file[:caption]) %>
+            <figure class="m-0">
+              <% if file[:link].present? %>
+                <%= link_to file[:link], rel: 'ugc' do %>
+                  <%= image_tag file[:url], class: 'img-thumbnail', alt: resource_alt_text(file, file[:caption]) %>
+                <% end %>
+              <% else %>
+                <% alt_text = resource_alt_text(file, '') %>
+                <%= image_tag file[:url], class: 'img-thumbnail', alt: alt_text, role: alt_text.present? ? nil : 'presentation' %>
               <% end %>
-            <% else %>
-              <% alt_text = resource_alt_text(file, '') %>
-              <%= image_tag file[:url], class: 'img-thumbnail', alt: alt_text, role: alt_text.present? ? nil : 'presentation' %>
-            <% end %>
-            <% if file[:caption].present? %>
-              <div class="caption">
-                <%= file[:caption] %>
-              </div>
-            <% end %>
+              <% if file[:caption].present? %>
+                <figcaption class="caption">
+                  <%= file[:caption] %>
+                </figcaption>
+              <% end %>
+            </figure>
 
             <% if uploaded_items_block.zpr_link? %>
               <%= button_tag t('.zpr_link_html', title: file[:caption]), class: 'btn btn-primary zpr-link', data: { 'iiif-tilesource' => { type: 'image', url: file[:url] }.to_json } %>
