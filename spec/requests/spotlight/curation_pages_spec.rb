@@ -22,6 +22,18 @@ RSpec.describe 'Curation pages', type: :request do
       expect(page).to have_text 'Recently updated items'
       expect(page).to have_css('#documents')
     end
+
+    context 'with a non-English locale' do
+      before do
+        FactoryBot.create(:language, exhibit:, locale: 'fr')
+      end
+
+      it 'renders without errors' do
+        get spotlight.exhibit_dashboard_path(exhibit, locale: 'fr')
+
+        expect(page).to have_css('#documents')
+      end
+    end
   end
 
   describe 'the about pages list' do
